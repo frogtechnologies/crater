@@ -99,3 +99,10 @@ Help us translate on https://crowdin.com/project/crater-invoice
 
 Crater is released under the GNU AFFERO GENERAL PUBLIC LICENSE Version 3.
 See [LICENSE](LICENSE) for details.
+
+
+## Heroku Install
+1. Setup fileystem
+2. Run migrations & DB Seeder
+3. Storage put `database_created`
+4. Run `php artisan db:seed --class=DemoSeeder`
