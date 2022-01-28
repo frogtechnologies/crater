@@ -14,3 +14,6 @@ Homestead.yaml
 /.vscode
 /docker-compose/db/data/
 .gitkeep
+
+_ide_helper.php
+.phpstorm.meta.php
