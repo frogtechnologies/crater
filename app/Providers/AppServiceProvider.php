@@ -4,6 +4,7 @@ namespace Crater\Providers;
 
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -18,7 +19,7 @@ class AppServiceProvider extends ServiceProvider
         Paginator::useBootstrapThree();
         $this->loadJsonTranslationsFrom(resource_path('scripts/locales'));
 
-        if (\Storage::has('database_created') && Schema::hasTable('abilities')) {
+        if (Storage::disk(config('filesystems.default'))->exists('database_created') && Schema::hasTable('abilities')) {
             $this->addMenus();
         }
     }

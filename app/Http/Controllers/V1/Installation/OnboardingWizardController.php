@@ -5,6 +5,7 @@ namespace Crater\Http\Controllers\V1\Installation;
 use Crater\Http\Controllers\Controller;
 use Crater\Models\Setting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class OnboardingWizardController extends Controller
 {
@@ -16,7 +17,7 @@ class OnboardingWizardController extends Controller
      */
     public function getStep(Request $request)
     {
-        if (! \Storage::has('database_created')) {
+        if (! Storage::disk(config('filesystems.default'))->exists('database_created')) {
             return response()->json([
                 'profile_complete' => 0,
             ]);

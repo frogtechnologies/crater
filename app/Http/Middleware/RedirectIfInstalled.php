@@ -4,6 +4,7 @@ namespace Crater\Http\Middleware;
 
 use Closure;
 use Crater\Models\Setting;
+use Illuminate\Support\Facades\Storage;
 
 class RedirectIfInstalled
 {
@@ -16,7 +17,7 @@ class RedirectIfInstalled
      */
     public function handle($request, Closure $next)
     {
-        if (\Storage::has('database_created')) {
+        if (Storage::disk(config('filesystems.default'))->exists('database_created')) {
             if (Setting::getSetting('profile_complete') === 'COMPLETED') {
                 return redirect('login');
             }

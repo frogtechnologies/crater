@@ -5,6 +5,7 @@ namespace Crater\Console;
 use Crater\Models\RecurringInvoice;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Support\Facades\Storage;
 
 class Kernel extends ConsoleKernel
 {
@@ -28,7 +29,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        if (\Storage::has('database_created')) {
+        if (Storage::disk(config('filesystems.default'))->exists('database_created')) {
             $schedule->command('check:invoices:status')
             ->daily();
 
