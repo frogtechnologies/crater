@@ -9,6 +9,7 @@
     "type": "project",
     "require": {
         "ext-ftp": "*",
+        "ext-gmp": "*",
         "php": "^7.4",
         "aws/aws-sdk-php": "^3.142",
         "barryvdh/laravel-dompdf": "^0.9.0",
