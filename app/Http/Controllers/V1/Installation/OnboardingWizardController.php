@@ -16,7 +16,7 @@ class OnboardingWizardController extends Controller
      */
     public function getStep(Request $request)
     {
-        if (! \Storage::disk('local')->has('database_created')) {
+        if (! \Storage::has('database_created')) {
             return response()->json([
                 'profile_complete' => 0,
             ]);

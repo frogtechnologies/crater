@@ -80,7 +80,7 @@ trait GeneratesPdfTrait
 
         $pdf = $this->getPDFData();
 
-        \Storage::disk('local')->put('temp/'.$collection_name.'/'.$this->id.'/temp.pdf', $pdf->output());
+        \Storage::put('temp/'.$collection_name.'/'.$this->id.'/temp.pdf', $pdf->output());
 
         if ($deleteExistingFile) {
             $this->clearMediaCollection($this->id);
@@ -92,7 +92,7 @@ trait GeneratesPdfTrait
             $file_disk->setConfig();
         }
 
-        $media = \Storage::disk('local')->path('temp/'.$collection_name.'/'.$this->id.'/temp.pdf');
+        $media = \Storage::path('temp/'.$collection_name.'/'.$this->id.'/temp.pdf');
 
         try {
             $this->addMedia($media)
@@ -100,7 +100,7 @@ trait GeneratesPdfTrait
                 ->usingFileName($file_name.'.pdf')
                 ->toMediaCollection($collection_name, config('filesystems.default'));
 
-            \Storage::disk('local')->deleteDirectory('temp/'.$collection_name.'/'.$this->id);
+            \Storage::deleteDirectory('temp/'.$collection_name.'/'.$this->id);
 
             return true;
         } catch (\Exception $e) {

@@ -28,7 +28,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        if (\Storage::disk('local')->has('database_created')) {
+        if (\Storage::has('database_created')) {
             $schedule->command('check:invoices:status')
             ->daily();
 
