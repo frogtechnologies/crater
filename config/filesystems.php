@@ -110,6 +110,24 @@ return [
             // 'timeout' => 30,
         ],
 
+        'sftp' => [
+            'driver' => 'sftp',
+            'host' => env('SFTP_HOST'),
+
+            // Settings for basic authentication...
+            'username' => env('SFTP_USERNAME'),
+            'password' => env('SFTP_PASSWORD'),
+
+            // Settings for SSH key based authentication with encryption password...
+            'privateKey' => env('SFTP_PRIVATE_KEY'),
+            'password' => env('SFTP_PASSWORD'),
+
+            // Optional SFTP Settings...
+            'port' => env('SFTP_PORT', 22),
+            // 'root' => env('SFTP_ROOT'),
+            // 'timeout' => 30,
+        ],
+
     ],
 
     /*
