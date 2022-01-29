@@ -14,7 +14,6 @@ class PathToZip implements Rule
      */
     public function __construct()
     {
-        
     }
 
     /**

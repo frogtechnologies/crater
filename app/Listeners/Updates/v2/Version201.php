@@ -18,7 +18,6 @@ class Version201 extends Listener
      */
     public function __construct()
     {
-        
     }
 
     /**

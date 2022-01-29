@@ -24,7 +24,6 @@ class Version300 extends Listener
      */
     public function __construct()
     {
-        
     }
 
     /**

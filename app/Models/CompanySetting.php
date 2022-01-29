@@ -61,7 +61,5 @@ class CompanySetting extends Model
             return $setting->value;
         }
         return null;
-
-    
     }
 }

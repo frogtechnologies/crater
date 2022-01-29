@@ -51,8 +51,6 @@ class Setting extends Model
             return $setting->value;
         }
         return null;
-
-    
     }
 
     public static function getSettings($settings)

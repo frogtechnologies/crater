@@ -178,6 +178,5 @@ trait GeneratesPdfTrait
         $str = str_replace('<p>', '', $str);
 
         return str_replace('</p>', '</br>', $str);
-    
     }
 }

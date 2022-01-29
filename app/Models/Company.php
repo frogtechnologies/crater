@@ -41,8 +41,6 @@ class Company extends Model implements HasMedia
                 return $logo->getPath();
             }
             return $logo->getFullUrl();
-
-        
         }
 
         return null;

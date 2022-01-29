@@ -165,8 +165,6 @@ class Invoice extends Model implements HasMedia
             return self::STATUS_SENT;
         }
         return self::STATUS_DRAFT;
-
-    
     }
 
     public function getFormattedCreatedAtAttribute($value)
@@ -362,7 +360,6 @@ class Invoice extends Model implements HasMedia
             'taxes',
         ])
             ->find($invoice->id);
-    
     }
 
     public function updateInvoice($request)

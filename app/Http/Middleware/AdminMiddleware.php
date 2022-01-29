@@ -23,8 +23,6 @@ class AdminMiddleware
                 return response('Unauthorized.', 401);
             }
             return response()->json(['error' => 'user_is_not_admin'], 404);
-
-        
         }
 
         return $next($request);

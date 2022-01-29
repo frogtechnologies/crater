@@ -104,7 +104,6 @@ class ExchangeRateProviderPolicy
      */
     public function restore(User $user, ExchangeRateProvider $exchangeRateProvider)
     {
-        
     }
 
     /**
@@ -117,6 +116,5 @@ class ExchangeRateProviderPolicy
      */
     public function forceDelete(User $user, ExchangeRateProvider $exchangeRateProvider)
     {
-        
     }
 }

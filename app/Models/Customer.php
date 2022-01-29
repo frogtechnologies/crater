@@ -193,7 +193,6 @@ class Customer extends Authenticatable implements HasMedia
         }
 
         return Customer::with('billingAddress', 'shippingAddress', 'fields')->find($customer->id);
-    
     }
 
     public static function updateCustomer($request, $customer)
@@ -227,7 +226,6 @@ class Customer extends Authenticatable implements HasMedia
         }
 
         return Customer::with('billingAddress', 'shippingAddress', 'fields')->find($customer->id);
-    
     }
 
     public function scopePaginateData($query, $limit)

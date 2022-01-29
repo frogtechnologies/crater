@@ -171,7 +171,6 @@ class Payment extends Model implements HasMedia
             'paymentMethod',
             'fields',
         ])->find($payment->id);
-    
     }
 
     public function updatePayment($request)

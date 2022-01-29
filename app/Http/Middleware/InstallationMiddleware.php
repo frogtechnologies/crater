@@ -18,7 +18,6 @@ class InstallationMiddleware
      */
     public function handle($request, Closure $next)
     {
-
         if (! Storage::exists('database_created')) {
             return redirect('/installation');
         }

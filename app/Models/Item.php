@@ -150,7 +150,6 @@ class Item extends Model
         }
 
         return self::with('taxes')->find($item->id);
-    
     }
 
     public function updateItem($request)

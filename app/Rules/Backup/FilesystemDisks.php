@@ -13,7 +13,6 @@ class FilesystemDisks implements Rule
      */
     public function __construct()
     {
-        
     }
 
     /**

@@ -13,7 +13,6 @@ class BackupDisk implements Rule
      */
     public function __construct()
     {
-        
     }
 
     /**
