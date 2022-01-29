@@ -87,6 +87,7 @@ return [
             'token' => env('DROPBOX_TOKEN'),
             'key' => env('DROPBOX_KEY'),
             'secret' => env('DROPBOX_SECRET'),
+            'authorization_token' => env('DROPBOX_TOKEN'),
             'app' => env('DROPBOX_APP'),
             'root' => env('DROPBOX_ROOT'),
         ],
