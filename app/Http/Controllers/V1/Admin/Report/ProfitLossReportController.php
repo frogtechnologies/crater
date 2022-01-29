@@ -15,19 +15,20 @@ use PDF;
 class ProfitLossReportController extends Controller
 {
     /**
-    * Handle the incoming request.
-    *
-    * @param  \Illuminate\Http\Request  $request
-    * @param  string  $hash
-    * @return \Illuminate\Http\JsonResponse
-    */
+     * Handle the incoming request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  string  $hash
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function __invoke(Request $request, $hash)
     {
         $company = Company::where('unique_hash', $hash)->first();
 
         $this->authorize('view report', $company);
 
-        $locale = CompanySetting::getSetting('language',  $company->id);
+        $locale = CompanySetting::getSetting('language', $company->id);
 
         App::setLocale($locale);
 

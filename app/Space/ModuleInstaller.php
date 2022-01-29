@@ -30,11 +30,11 @@ class ModuleInstaller
         $token = Setting::getSetting('api_token');
         $response = static::getRemote($url, ['timeout' => 100, 'track_redirects' => true], $token);
 
-        if ($response && ($response->getStatusCode() == 401)) {
+        if ($response && ($response->getStatusCode() === 401)) {
             return response()->json(['error' => 'invalid_token']);
         }
 
-        if ($response && ($response->getStatusCode() == 200)) {
+        if ($response && ($response->getStatusCode() === 200)) {
             $data = $response->getBody()->getContents();
         }
 
@@ -55,11 +55,11 @@ class ModuleInstaller
         $token = Setting::getSetting('api_token');
         $response = static::getRemote($url, ['timeout' => 100, 'track_redirects' => true], $token);
 
-        if ($response && ($response->getStatusCode() == 401)) {
-            return (object)['success' => false, 'error' => 'invalid_token'];
+        if ($response && ($response->getStatusCode() === 401)) {
+            return (object) ['success' => false, 'error' => 'invalid_token'];
         }
 
-        if ($response && ($response->getStatusCode() == 200)) {
+        if ($response && ($response->getStatusCode() === 200)) {
             $data = $response->getBody()->getContents();
         }
 
@@ -77,13 +77,11 @@ class ModuleInstaller
             File::makeDirectory($temp_dir);
         }
 
-        $path = $request->file('avatar')->storeAs(
+        return $request->file('avatar')->storeAs(
             'temp-'.md5(mt_rand()),
             $request->module.'.zip',
             'local'
         );
-
-        return $path;
     }
 
     public static function download($module, $version)
@@ -111,11 +109,11 @@ class ModuleInstaller
             ];
         }
 
-        if ($response && ($response->getStatusCode() == 401 || $response->getStatusCode() == 404 || $response->getStatusCode() == 500)) {
+        if ($response && ($response->getStatusCode() === 401 || $response->getStatusCode() === 404 || $response->getStatusCode() === 500)) {
             return json_decode($response->getBody()->getContents());
         }
 
-        if ($response && ($response->getStatusCode() == 200)) {
+        if ($response && ($response->getStatusCode() === 200)) {
             $data = $response->getBody()->getContents();
         }
 
@@ -137,7 +135,7 @@ class ModuleInstaller
 
         return [
             'success' => true,
-            'path' => $zip_file_path
+            'path' => $zip_file_path,
         ];
     }
 
@@ -203,9 +201,9 @@ class ModuleInstaller
     {
         Module::register();
 
-        Artisan::call("module:migrate $module --force");
-        Artisan::call("module:seed $module --force");
-        Artisan::call("module:enable $module");
+        Artisan::call("module:migrate ${module} --force");
+        Artisan::call("module:seed ${module} --force");
+        Artisan::call("module:enable ${module}");
 
         $module = ModelsModule::updateOrCreate(['name' => $module], ['version' => $version, 'installed' => true, 'enabled' => true]);
 
@@ -215,12 +213,12 @@ class ModuleInstaller
         return true;
     }
 
-    public static function checkToken(String $token)
+    public static function checkToken(string $token)
     {
         $url = 'api/marketplace/ping';
         $response = static::getRemote($url, ['timeout' => 100, 'track_redirects' => true], $token);
 
-        if ($response && ($response->getStatusCode() == 200)) {
+        if ($response && ($response->getStatusCode() === 200)) {
             $data = $response->getBody()->getContents();
 
             return response()->json(json_decode($data));

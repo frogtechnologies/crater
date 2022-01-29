@@ -28,23 +28,23 @@ class RoleRequest extends FormRequest
             'name' => [
                 'required',
                 'string',
-                Rule::unique('roles')->where('scope', $this->header('company'))
+                Rule::unique('roles')->where('scope', $this->header('company')),
             ],
             'abilities' => [
-                'required'
+                'required',
             ],
             'abilities.*' => [
-                'required'
-            ]
+                'required',
+            ],
         ];
 
-        if ($this->getMethod() == 'PUT') {
+        if ($this->getMethod() === 'PUT') {
             $rules['name'] = [
                 'required',
                 'string',
                 Rule::unique('roles')
                     ->ignore($this->route('role')->id, 'id')
-                    ->where('scope', $this->header('company'))
+                    ->where('scope', $this->header('company')),
             ];
         }
 

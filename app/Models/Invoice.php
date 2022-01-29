@@ -41,7 +41,7 @@ class Invoice extends Model implements HasMedia
         'updated_at',
         'deleted_at',
         'invoice_date',
-        'due_date'
+        'due_date',
     ];
 
     protected $casts = [
@@ -50,7 +50,7 @@ class Invoice extends Model implements HasMedia
         'sub_total' => 'integer',
         'discount' => 'float',
         'discount_val' => 'integer',
-        'exchange_rate' => 'float'
+        'exchange_rate' => 'float',
     ];
 
     protected $guarded = [
@@ -142,11 +142,11 @@ class Invoice extends Model implements HasMedia
             self::STATUS_COMPLETED,
         ];
 
-        if ($retrospective_edit == 'disable_on_invoice_sent' && (in_array($this->status, $status)) && ($this->paid_status === Invoice::STATUS_PARTIALLY_PAID || $this->paid_status === Invoice::STATUS_PAID)) {
+        if ($retrospective_edit === 'disable_on_invoice_sent' && (in_array($this->status, $status)) && ($this->paid_status === Invoice::STATUS_PARTIALLY_PAID || $this->paid_status === Invoice::STATUS_PAID)) {
             $allowed = false;
-        } elseif ($retrospective_edit == 'disable_on_invoice_partial_paid' && ($this->paid_status === Invoice::STATUS_PARTIALLY_PAID || $this->paid_status === Invoice::STATUS_PAID)) {
+        } elseif ($retrospective_edit === 'disable_on_invoice_partial_paid' && ($this->paid_status === Invoice::STATUS_PARTIALLY_PAID || $this->paid_status === Invoice::STATUS_PAID)) {
             $allowed = false;
-        } elseif ($retrospective_edit == 'disable_on_invoice_paid' && $this->paid_status === Invoice::STATUS_PAID) {
+        } elseif ($retrospective_edit === 'disable_on_invoice_paid' && $this->paid_status === Invoice::STATUS_PAID) {
             $allowed = false;
         }
 
@@ -157,13 +157,16 @@ class Invoice extends Model implements HasMedia
     {
         if ($this->due_date < Carbon::now()) {
             return self::STATUS_OVERDUE;
-        } elseif ($this->viewed) {
-            return self::STATUS_VIEWED;
-        } elseif ($this->sent) {
-            return self::STATUS_SENT;
-        } else {
-            return self::STATUS_DRAFT;
         }
+        if ($this->viewed) {
+            return self::STATUS_VIEWED;
+        }
+        if ($this->sent) {
+            return self::STATUS_SENT;
+        }
+        return self::STATUS_DRAFT;
+
+    
     }
 
     public function getFormattedCreatedAtAttribute($value)
@@ -244,12 +247,12 @@ class Invoice extends Model implements HasMedia
 
         if ($filters->get('status')) {
             if (
-                $filters->get('status') == self::STATUS_UNPAID ||
-                $filters->get('status') == self::STATUS_PARTIALLY_PAID ||
-                $filters->get('status') == self::STATUS_PAID
+                $filters->get('status') === self::STATUS_UNPAID ||
+                $filters->get('status') === self::STATUS_PARTIALLY_PAID ||
+                $filters->get('status') === self::STATUS_PAID
             ) {
                 $query->wherePaidStatus($filters->get('status'));
-            } elseif ($filters->get('status') == self::STATUS_DUE) {
+            } elseif ($filters->get('status') === self::STATUS_DUE) {
                 $query->whereDueStatus($filters->get('status'));
             } else {
                 $query->whereStatus($filters->get('status'));
@@ -307,7 +310,7 @@ class Invoice extends Model implements HasMedia
 
     public function scopePaginateData($query, $limit)
     {
-        if ($limit == 'all') {
+        if ($limit === 'all') {
             return $query->get();
         }
 
@@ -339,7 +342,7 @@ class Invoice extends Model implements HasMedia
 
         $company_currency = CompanySetting::getSetting('currency', $request->header('company'));
 
-        if ((string)$data['currency_id'] !== $company_currency) {
+        if ((string) $data['currency_id'] !== $company_currency) {
             ExchangeRateLog::addExchangeRateLog($invoice);
         }
 
@@ -351,16 +354,15 @@ class Invoice extends Model implements HasMedia
             $invoice->addCustomFields($request->customFields);
         }
 
-        $invoice = Invoice::with([
+        return Invoice::with([
             'items',
             'items.fields',
             'items.fields.customField',
             'customer',
-            'taxes'
+            'taxes',
         ])
             ->find($invoice->id);
-
-        return $invoice;
+    
     }
 
     public function updateInvoice($request)
@@ -385,13 +387,13 @@ class Invoice extends Model implements HasMedia
             return 'total_invoice_amount_must_be_more_than_paid_amount';
         }
 
-        if ($oldTotal != $request->total) {
+        if ($oldTotal !== $request->total) {
             $oldTotal = (int) round($request->total) - (int) $oldTotal;
         } else {
             $oldTotal = 0;
         }
 
-        $data['due_amount'] = ($this->due_amount + $oldTotal);
+        $data['due_amount'] = $this->due_amount + $oldTotal;
         $data['base_due_amount'] = $data['due_amount'] * $data['exchange_rate'];
         $data['customer_sequence_number'] = $serial->nextCustomerSequenceNumber;
 
@@ -401,7 +403,7 @@ class Invoice extends Model implements HasMedia
 
         $company_currency = CompanySetting::getSetting('currency', $request->header('company'));
 
-        if ((string)$data['currency_id'] !== $company_currency) {
+        if ((string) $data['currency_id'] !== $company_currency) {
             ExchangeRateLog::addExchangeRateLog($this);
         }
 
@@ -426,16 +428,14 @@ class Invoice extends Model implements HasMedia
             $this->updateCustomFields($request->customFields);
         }
 
-        $invoice = Invoice::with([
+        return Invoice::with([
             'items',
             'items.fields',
             'items.fields.customField',
             'customer',
-            'taxes'
+            'taxes',
         ])
             ->find($this->id);
-
-        return $invoice;
     }
 
     public function sendInvoiceData($data)
@@ -444,7 +444,7 @@ class Invoice extends Model implements HasMedia
         $data['customer'] = $this->customer->toArray();
         $data['company'] = Company::find($this->company_id);
         $data['body'] = $this->getEmailBody($data['body']);
-        $data['attach']['data'] = ($this->getEmailAttachmentSetting()) ? $this->getPDFData() : null;
+        $data['attach']['data'] = $this->getEmailAttachmentSetting() ? $this->getPDFData() : null;
 
         return $data;
     }
@@ -455,7 +455,7 @@ class Invoice extends Model implements HasMedia
 
         return [
             'type' => 'preview',
-            'view' => new SendInvoiceMail($data)
+            'view' => new SendInvoiceMail($data),
         ];
     }
 
@@ -465,7 +465,7 @@ class Invoice extends Model implements HasMedia
 
         \Mail::to($data['to'])->send(new SendInvoiceMail($data));
 
-        if ($this->status == Invoice::STATUS_DRAFT) {
+        if ($this->status === Invoice::STATUS_DRAFT) {
             $this->status = Invoice::STATUS_SENT;
             $this->sent = true;
             $this->save();
@@ -498,7 +498,7 @@ class Invoice extends Model implements HasMedia
             if (array_key_exists('taxes', $invoiceItem) && $invoiceItem['taxes']) {
                 foreach ($invoiceItem['taxes'] as $tax) {
                     $tax['company_id'] = $invoice->company_id;
-                    if (gettype($tax['amount']) !== "NULL") {
+                    if (gettype($tax['amount']) !== 'NULL') {
                         if (array_key_exists('recurring_invoice_id', $invoiceItem)) {
                             unset($invoiceItem['recurring_invoice_id']);
                         }
@@ -524,7 +524,7 @@ class Invoice extends Model implements HasMedia
             $tax['base_amount'] = $tax['amount'] * $exchange_rate;
             $tax['currency_id'] = $invoice->currency_id;
 
-            if (gettype($tax['amount']) !== "NULL") {
+            if (gettype($tax['amount']) !== 'NULL') {
                 if (array_key_exists('recurring_invoice_id', $tax)) {
                     unset($tax['recurring_invoice_id']);
                 }
@@ -542,7 +542,7 @@ class Invoice extends Model implements HasMedia
             foreach ($this->items as $item) {
                 foreach ($item->taxes as $tax) {
                     $found = $taxes->filter(function ($item) use ($tax) {
-                        return $item->tax_type_id == $tax->tax_type_id;
+                        return $item->tax_type_id === $tax->tax_type_id;
                     })->first();
 
                     if ($found) {
@@ -582,7 +582,7 @@ class Invoice extends Model implements HasMedia
     {
         $invoiceAsAttachment = CompanySetting::getSetting('invoice_email_attachment', $this->company_id);
 
-        if ($invoiceAsAttachment == 'NO') {
+        if ($invoiceAsAttachment === 'NO') {
             return false;
         }
 
@@ -685,10 +685,10 @@ class Invoice extends Model implements HasMedia
             ];
         }
 
-        if ($amount == 0) {
+        if ($amount === 0) {
             $this->status = Invoice::STATUS_COMPLETED;
             $this->paid_status = Invoice::STATUS_PAID;
-        } elseif ($amount == $this->total) {
+        } elseif ($amount === $this->total) {
             $this->status = $this->getPreviousStatus();
             $this->paid_status = Invoice::STATUS_UNPAID;
         } else {

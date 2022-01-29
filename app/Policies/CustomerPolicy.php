@@ -15,6 +15,7 @@ class CustomerPolicy
      * Determine whether the user can view any models.
      *
      * @param  \Crater\Models\User  $user
+     *
      * @return mixed
      */
     public function viewAny(User $user)
@@ -31,6 +32,7 @@ class CustomerPolicy
      *
      * @param  \Crater\Models\User  $user
      * @param  \Crater\Models\Customer  $customer
+     *
      * @return mixed
      */
     public function view(User $user, Customer $customer)
@@ -46,6 +48,7 @@ class CustomerPolicy
      * Determine whether the user can create models.
      *
      * @param  \Crater\Models\User  $user
+     *
      * @return mixed
      */
     public function create(User $user)
@@ -62,6 +65,7 @@ class CustomerPolicy
      *
      * @param  \Crater\Models\User  $user
      * @param  \Crater\Models\Customer  $customer
+     *
      * @return mixed
      */
     public function update(User $user, Customer $customer)
@@ -78,6 +82,7 @@ class CustomerPolicy
      *
      * @param  \Crater\Models\User  $user
      * @param  \Crater\Models\Customer  $customer
+     *
      * @return mixed
      */
     public function delete(User $user, Customer $customer)
@@ -94,6 +99,7 @@ class CustomerPolicy
      *
      * @param  \Crater\Models\User  $user
      * @param  \Crater\Models\Customer  $customer
+     *
      * @return mixed
      */
     public function restore(User $user, Customer $customer)
@@ -110,6 +116,7 @@ class CustomerPolicy
      *
      * @param  \Crater\Models\User  $user
      * @param  \Crater\Models\Customer  $customer
+     *
      * @return mixed
      */
     public function forceDelete(User $user, Customer $customer)
@@ -125,6 +132,7 @@ class CustomerPolicy
      * Determine whether the user can delete models.
      *
      * @param  \Crater\Models\User  $user
+     *
      * @return mixed
      */
     public function deleteMultiple(User $user)

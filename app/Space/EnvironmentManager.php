@@ -29,6 +29,7 @@ class EnvironmentManager
      * Save the database content to the .env file.
      *
      * @param DatabaseEnvironmentRequest $request
+     *
      * @return array
      */
     public function saveDatabaseVariables(DatabaseEnvironmentRequest $request)
@@ -41,18 +42,18 @@ class EnvironmentManager
 
         if ($request->has('database_username') && $request->has('database_password')) {
             if (env('DB_USERNAME') && env('DB_HOST')) {
-                $oldDatabaseData = $oldDatabaseData.
+                $oldDatabaseData .=
                     'DB_HOST='.config('database.connections.'.config('database.default').'.host')."\n".
                     'DB_PORT='.config('database.connections.'.config('database.default').'.port')."\n".
                     'DB_DATABASE='.config('database.connections.'.config('database.default').'.database')."\n".
                     'DB_USERNAME='.config('database.connections.'.config('database.default').'.username')."\n".
                     'DB_PASSWORD="'.config('database.connections.'.config('database.default').'.password')."\"\n\n";
             } else {
-                $oldDatabaseData = $oldDatabaseData.
+                $oldDatabaseData .=
                     'DB_DATABASE='.config('database.connections.'.config('database.default').'.database')."\n\n";
             }
 
-            $newDatabaseData = $newDatabaseData.
+            $newDatabaseData .=
                 'DB_HOST='.$request->database_hostname."\n".
                 'DB_PORT='.$request->database_port."\n".
                 'DB_DATABASE='.$request->database_name."\n".
@@ -60,18 +61,18 @@ class EnvironmentManager
                 'DB_PASSWORD="'.$request->database_password."\"\n\n";
         } else {
             if (env('DB_USERNAME') && env('DB_HOST')) {
-                $oldDatabaseData = $oldDatabaseData.
+                $oldDatabaseData .=
                     'DB_HOST='.config('database.connections.'.config('database.default').'.host')."\n".
                     'DB_PORT='.config('database.connections.'.config('database.default').'.port')."\n".
                     'DB_DATABASE='.config('database.connections.'.config('database.default').'.database')."\n".
                     'DB_USERNAME='.config('database.connections.'.config('database.default').'.username')."\n".
                     'DB_PASSWORD="'.config('database.connections.'.config('database.default').'.password')."\"\n\n";
             } else {
-                $oldDatabaseData = $oldDatabaseData.
+                $oldDatabaseData .=
                     'DB_DATABASE='.config('database.connections.'.config('database.default').'.database')."\n\n";
             }
 
-            $newDatabaseData = $newDatabaseData.
+            $newDatabaseData .=
                 'DB_DATABASE='.$request->database_name."\n\n";
         }
 
@@ -117,7 +118,6 @@ class EnvironmentManager
                 file_get_contents($this->envPath)
             ));
 
-
             file_put_contents($this->envPath, str_replace(
                 'SESSION_DOMAIN='.config('session.domain'),
                 'SESSION_DOMAIN='.explode(':', $request->app_domain)[0],
@@ -135,16 +135,132 @@ class EnvironmentManager
     }
 
     /**
+     * Save the mail content to the .env file.
      *
+     * @param Request $request
+     *
+     * @return array
+     */
+    public function saveMailVariables(MailEnvironmentRequest $request)
+    {
+        $mailData = $this->getMailData($request);
+
+        try {
+            file_put_contents($this->envPath, str_replace(
+                $mailData['old_mail_data'],
+                $mailData['new_mail_data'],
+                file_get_contents($this->envPath)
+            ));
+
+            if ($mailData['extra_old_mail_data']) {
+                file_put_contents($this->envPath, str_replace(
+                    $mailData['extra_old_mail_data'],
+                    $mailData['extra_mail_data'],
+                    file_get_contents($this->envPath)
+                ));
+            } else {
+                file_put_contents(
+                    $this->envPath,
+                    "\n".$mailData['extra_mail_data'],
+                    FILE_APPEND
+                );
+            }
+        } catch (Exception $e) {
+            return [
+                'error' => 'mail_variables_save_error',
+            ];
+        }
+
+        return [
+            'success' => 'mail_variables_save_successfully',
+        ];
+    }
+
+    /**
+     * Save the disk content to the .env file.
+     *
+     * @param Request $request
+     *
+     * @return array
+     */
+    public function saveDiskVariables(DiskEnvironmentRequest $request)
+    {
+        $diskData = $this->getDiskData($request);
+
+        try {
+            if (! $diskData['old_default_driver']) {
+                file_put_contents($this->envPath, $diskData['default_driver'], FILE_APPEND);
+            } else {
+                file_put_contents($this->envPath, str_replace(
+                    $diskData['old_default_driver'],
+                    $diskData['default_driver'],
+                    file_get_contents($this->envPath)
+                ));
+            }
+
+            if (! $diskData['old_disk_data']) {
+                file_put_contents($this->envPath, $diskData['new_disk_data'], FILE_APPEND);
+            } else {
+                file_put_contents($this->envPath, str_replace(
+                    $diskData['old_disk_data'],
+                    $diskData['new_disk_data'],
+                    file_get_contents($this->envPath)
+                ));
+            }
+        } catch (Exception $e) {
+            return [
+                'error' => 'disk_variables_save_error',
+            ];
+        }
+
+        return [
+            'success' => 'disk_variables_save_successfully',
+        ];
+    }
+
+    /**
+     * Save sanctum statful domain to the .env file.
+     *
+     * @param DomainEnvironmentRequest $request
+     *
+     * @return array
+     */
+    public function saveDomainVariables(DomainEnvironmentRequest $request)
+    {
+        try {
+            file_put_contents($this->envPath, str_replace(
+                'SANCTUM_STATEFUL_DOMAINS='.env('SANCTUM_STATEFUL_DOMAINS'),
+                'SANCTUM_STATEFUL_DOMAINS='.$request->app_domain,
+                file_get_contents($this->envPath)
+            ));
+
+            file_put_contents($this->envPath, str_replace(
+                'SESSION_DOMAIN='.config('session.domain'),
+                'SESSION_DOMAIN='.explode(':', $request->app_domain)[0],
+                file_get_contents($this->envPath)
+            ));
+        } catch (Exception $e) {
+            return [
+                'error' => 'domain_verification_failed',
+            ];
+        }
+
+        return [
+            'success' => 'domain_variable_save_successfully',
+        ];
+    }
+
+    /**
      * @param DatabaseEnvironmentRequest $request
+     *
      * @return bool
      */
     private function checkDatabaseConnection(DatabaseEnvironmentRequest $request)
     {
         $connection = $request->database_connection;
 
-        $settings = config("database.connections.$connection");
-        $settings = config("database.connections.$connection");
+        $settings = config("database.connections.${connection}");
+        $settings = config("database.connections.${connection}");
 
         $connectionArray = array_merge($settings, [
             'driver' => $connection,
@@ -172,8 +288,8 @@ class EnvironmentManager
     }
 
     /**
-     *
      * @param DatabaseEnvironmentRequest $request
+     *
      * @return bool
      */
     private function checkVersionRequirements(DatabaseEnvironmentRequest $request, $conn)
@@ -223,54 +339,13 @@ class EnvironmentManager
         return false;
     }
 
-    /**
-    * Save the mail content to the .env file.
-    *
-    * @param Request $request
-    * @return array
-    */
-    public function saveMailVariables(MailEnvironmentRequest $request)
-    {
-        $mailData = $this->getMailData($request);
-
-        try {
-            file_put_contents($this->envPath, str_replace(
-                $mailData['old_mail_data'],
-                $mailData['new_mail_data'],
-                file_get_contents($this->envPath)
-            ));
-
-            if ($mailData['extra_old_mail_data']) {
-                file_put_contents($this->envPath, str_replace(
-                    $mailData['extra_old_mail_data'],
-                    $mailData['extra_mail_data'],
-                    file_get_contents($this->envPath)
-                ));
-            } else {
-                file_put_contents(
-                    $this->envPath,
-                    "\n".$mailData['extra_mail_data'],
-                    FILE_APPEND
-                );
-            }
-        } catch (Exception $e) {
-            return [
-                'error' => 'mail_variables_save_error',
-            ];
-        }
-
-        return [
-            'success' => 'mail_variables_save_successfully',
-        ];
-    }
-
     private function getMailData($request)
     {
-        $mailFromCredential = "";
-        $extraMailData = "";
-        $extraOldMailData = "";
-        $oldMailData = "";
-        $newMailData = "";
+        $mailFromCredential = '';
+        $extraMailData = '';
+        $extraOldMailData = '';
+        $oldMailData = '';
+        $newMailData = '';
 
         if (env('MAIL_FROM_ADDRESS') !== null && env('MAIL_FROM_NAME') !== null) {
             $mailFromCredential =
@@ -280,7 +355,6 @@ class EnvironmentManager
 
         switch ($request->mail_driver) {
             case 'smtp':
-
                 $oldMailData =
                     'MAIL_DRIVER='.config('mail.driver')."\n".
                     'MAIL_HOST='.config('mail.host')."\n".
@@ -421,53 +495,12 @@ class EnvironmentManager
         ];
     }
 
-    /**
-     * Save the disk content to the .env file.
-     *
-     * @param Request $request
-     * @return array
-     */
-    public function saveDiskVariables(DiskEnvironmentRequest $request)
-    {
-        $diskData = $this->getDiskData($request);
-
-        try {
-            if (! $diskData['old_default_driver']) {
-                file_put_contents($this->envPath, $diskData['default_driver'], FILE_APPEND);
-            } else {
-                file_put_contents($this->envPath, str_replace(
-                    $diskData['old_default_driver'],
-                    $diskData['default_driver'],
-                    file_get_contents($this->envPath)
-                ));
-            }
-
-            if (! $diskData['old_disk_data']) {
-                file_put_contents($this->envPath, $diskData['new_disk_data'], FILE_APPEND);
-            } else {
-                file_put_contents($this->envPath, str_replace(
-                    $diskData['old_disk_data'],
-                    $diskData['new_disk_data'],
-                    file_get_contents($this->envPath)
-                ));
-            }
-        } catch (Exception $e) {
-            return [
-                'error' => 'disk_variables_save_error',
-            ];
-        }
-
-        return [
-            'success' => 'disk_variables_save_successfully',
-        ];
-    }
-
     private function getDiskData($request)
     {
-        $oldDefaultDriver = "";
-        $defaultDriver = "";
-        $oldDiskData = "";
-        $newDiskData = "";
+        $oldDefaultDriver = '';
+        $defaultDriver = '';
+        $oldDiskData = '';
+        $newDiskData = '';
 
         if ($request->default_driver) {
             if (env('FILESYSTEM_DRIVER') !== null) {
@@ -547,37 +580,6 @@ class EnvironmentManager
             'new_disk_data' => $newDiskData,
             'default_driver' => $defaultDriver,
             'old_default_driver' => $oldDefaultDriver,
-        ];
-    }
-
-    /**
-     * Save sanctum statful domain to the .env file.
-     *
-     * @param DomainEnvironmentRequest $request
-     * @return array
-     */
-    public function saveDomainVariables(DomainEnvironmentRequest $request)
-    {
-        try {
-            file_put_contents($this->envPath, str_replace(
-                'SANCTUM_STATEFUL_DOMAINS='.env('SANCTUM_STATEFUL_DOMAINS'),
-                'SANCTUM_STATEFUL_DOMAINS='.$request->app_domain,
-                file_get_contents($this->envPath)
-            ));
-
-            file_put_contents($this->envPath, str_replace(
-                'SESSION_DOMAIN='.config('session.domain'),
-                'SESSION_DOMAIN='.explode(':', $request->app_domain)[0],
-                file_get_contents($this->envPath)
-            ));
-        } catch (Exception $e) {
-            return [
-                'error' => 'domain_verification_failed'
-            ];
-        }
-
-        return [
-            'success' => 'domain_variable_save_successfully'
         ];
     }
 }

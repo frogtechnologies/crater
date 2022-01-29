@@ -13,7 +13,7 @@ class FilesystemDisks implements Rule
      */
     public function __construct()
     {
-        //
+        
     }
 
     /**
@@ -21,6 +21,7 @@ class FilesystemDisks implements Rule
      *
      * @param  string  $attribute
      * @param  mixed  $value
+     *
      * @return bool
      */
     public function passes($attribute, $value)

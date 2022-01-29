@@ -10,6 +10,7 @@ class CurrencyResource extends JsonResource
      * Transform the resource into an array.
      *
      * @param  \Illuminate\Http\Request  $request
+     *
      * @return array
      */
     public function toArray($request)
@@ -23,7 +24,7 @@ class CurrencyResource extends JsonResource
             'thousand_separator' => $this->thousand_separator,
             'decimal_separator' => $this->decimal_separator,
             'swap_currency_symbol' => $this->swap_currency_symbol,
-            'exchange_rate' => $this->exchange_rate
+            'exchange_rate' => $this->exchange_rate,
         ];
     }
 }

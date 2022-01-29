@@ -16,6 +16,7 @@ class ItemsController extends Controller
      * Retrieve a list of existing Items.
      *
      * @param  \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function index(Request $request)
@@ -31,17 +32,19 @@ class ItemsController extends Controller
             ->latest()
             ->paginateData($limit);
 
-        return (ItemResource::collection($items))
+        return ItemResource::collection($items)
             ->additional(['meta' => [
                 'tax_types' => TaxType::whereCompany()->latest()->get(),
                 'item_total_count' => Item::whereCompany()->count(),
-            ]]);
+            ],
+            ]);
     }
 
     /**
      * Create Item.
      *
      * @param  Crater\Http\Requests\ItemsRequest $request
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function store(Requests\ItemsRequest $request)
@@ -57,6 +60,7 @@ class ItemsController extends Controller
      * get an existing Item.
      *
      * @param  Item $item
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function show(Item $item)
@@ -71,6 +75,7 @@ class ItemsController extends Controller
      *
      * @param  Crater\Http\Requests\ItemsRequest $request
      * @param  \Crater\Models\Item $item
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function update(Requests\ItemsRequest $request, Item $item)
@@ -86,6 +91,7 @@ class ItemsController extends Controller
      * Delete a list of existing Items.
      *
      * @param  \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function delete(DeleteItemsRequest $request)

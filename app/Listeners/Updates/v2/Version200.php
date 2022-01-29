@@ -18,13 +18,14 @@ class Version200 extends Listener
      */
     public function __construct()
     {
-        //
+        
     }
 
     /**
      * Handle the event.
      *
      * @param  object  $event
+     *
      * @return void
      */
     public function handle(UpdateFinished $event)
@@ -106,6 +107,6 @@ class Version200 extends Listener
 
     private function updateVersion()
     {
-        Setting::setSetting('version', static::VERSION);
+        Setting::setSetting('version', self::VERSION);
     }
 }

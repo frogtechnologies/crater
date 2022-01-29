@@ -95,7 +95,7 @@ class Item extends Model
 
     public function scopePaginateData($query, $limit)
     {
-        if ($limit == 'all') {
+        if ($limit === 'all') {
             return $query->get();
         }
 
@@ -149,9 +149,8 @@ class Item extends Model
             }
         }
 
-        $item = self::with('taxes')->find($item->id);
-
-        return $item;
+        return self::with('taxes')->find($item->id);
+    
     }
 
     public function updateItem($request)

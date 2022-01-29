@@ -25,16 +25,17 @@ class Kernel extends ConsoleKernel
      * Define the application's command schedule.
      *
      * @param  \Illuminate\Console\Scheduling\Schedule $schedule
+     *
      * @return void
      */
     protected function schedule(Schedule $schedule)
     {
         if (Storage::disk(config('filesystems.default'))->exists('database_created')) {
             $schedule->command('check:invoices:status')
-            ->daily();
+                ->daily();
 
             $schedule->command('check:estimates:status')
-            ->daily();
+                ->daily();
 
             $recurringInvoices = RecurringInvoice::where('status', 'ACTIVE')->get();
             foreach ($recurringInvoices as $recurringInvoice) {

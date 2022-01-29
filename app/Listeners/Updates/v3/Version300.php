@@ -24,13 +24,14 @@ class Version300 extends Listener
      */
     public function __construct()
     {
-        //
+        
     }
 
     /**
      * Handle the event.
      *
      * @param  object  $event
+     *
      * @return void
      */
     public function handle($event)
@@ -47,7 +48,7 @@ class Version300 extends Listener
 
         $this->changeMigrations(true);
 
-        Setting::setSetting('version', static::VERSION);
+        Setting::setSetting('version', self::VERSION);
     }
 
     public function changeMigrations($removeColumn = false)

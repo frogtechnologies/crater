@@ -12,14 +12,15 @@ class FinishUpdateController extends Controller
      * Handle the incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function __invoke(Request $request)
     {
-        if ((! $request->user()) || (! $request->user()->isOwner())) {
+        if (! $request->user() || (! $request->user()->isOwner())) {
             return response()->json([
                 'success' => false,
-                'message' => 'You are not allowed to update this app.'
+                'message' => 'You are not allowed to update this app.',
             ], 401);
         }
 

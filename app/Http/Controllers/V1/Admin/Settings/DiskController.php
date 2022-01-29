@@ -12,7 +12,6 @@ use Illuminate\Http\Request;
 class DiskController extends Controller
 {
     /**
-     *
      * @return JsonResponse
      */
     public function index(Request $request)
@@ -28,8 +27,8 @@ class DiskController extends Controller
     }
 
     /**
-     *
      * @param DiskEnvironmentRequest $request
+     *
      * @return JsonResponse
      */
     public function store(DiskEnvironmentRequest $request)
@@ -46,9 +45,9 @@ class DiskController extends Controller
     }
 
     /**
-     *
      * @param Request $request
      * @param \Crater\Models\FileDisk $file_disk
+     *
      * @return JsonResponse
      */
     public function update(FileDisk $disk, Request $request)
@@ -73,6 +72,7 @@ class DiskController extends Controller
 
     /**
      * @param Request $request
+     *
      * @return JsonResponse
      */
     public function show($disk)
@@ -87,7 +87,6 @@ class DiskController extends Controller
                 ];
 
                 break;
-
 
             case 's3':
                 $diskData = [
@@ -133,6 +132,7 @@ class DiskController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \Crater\Models\FileDisk  $taxType
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy(FileDisk $disk)
@@ -151,7 +151,6 @@ class DiskController extends Controller
     }
 
     /**
-     *
      * @return JsonResponse
      */
     public function getDiskDrivers()

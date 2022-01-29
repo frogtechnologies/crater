@@ -16,14 +16,6 @@ class RecurringInvoice extends Model
     use HasFactory;
     use HasCustomFieldsTrait;
 
-    protected $guarded = [
-        'id',
-    ];
-
-    protected $dates = [
-        'starts_at'
-    ];
-
     public const NONE = 'NONE';
     public const COUNT = 'COUNT';
     public const DATE = 'DATE';
@@ -32,16 +24,24 @@ class RecurringInvoice extends Model
     public const ON_HOLD = 'ON_HOLD';
     public const ACTIVE = 'ACTIVE';
 
+    protected $guarded = [
+        'id',
+    ];
+
+    protected $dates = [
+        'starts_at',
+    ];
+
     protected $appends = [
         'formattedCreatedAt',
         'formattedStartsAt',
         'formattedNextInvoiceAt',
-        'formattedLimitDate'
+        'formattedLimitDate',
     ];
 
     protected $casts = [
         'exchange_rate' => 'float',
-        'send_automatically' => 'boolean'
+        'send_automatically' => 'boolean',
     ];
 
     public function getFormattedStartsAtAttribute()
@@ -114,7 +114,7 @@ class RecurringInvoice extends Model
 
     public function scopePaginateData($query, $limit)
     {
-        if ($limit == 'all') {
+        if ($limit === 'all') {
             return $query->get();
         }
 
@@ -190,7 +190,7 @@ class RecurringInvoice extends Model
 
         $company_currency = CompanySetting::getSetting('currency', $request->header('company'));
 
-        if ((string)$recurringInvoice['currency_id'] !== $company_currency) {
+        if ((string) $recurringInvoice['currency_id'] !== $company_currency) {
             ExchangeRateLog::addExchangeRateLog($recurringInvoice);
         }
 
@@ -215,7 +215,7 @@ class RecurringInvoice extends Model
 
         $company_currency = CompanySetting::getSetting('currency', $request->header('company'));
 
-        if ((string)$data['currency_id'] !== $company_currency) {
+        if ((string) $data['currency_id'] !== $company_currency) {
             ExchangeRateLog::addExchangeRateLog($this);
         }
 
@@ -242,7 +242,7 @@ class RecurringInvoice extends Model
             if (array_key_exists('taxes', $invoiceItem) && $invoiceItem['taxes']) {
                 foreach ($invoiceItem['taxes'] as $tax) {
                     $tax['company_id'] = $recurringInvoice->company_id;
-                    if (gettype($tax['amount']) !== "NULL") {
+                    if (gettype($tax['amount']) !== 'NULL') {
                         $item->taxes()->create($tax);
                     }
                 }
@@ -255,7 +255,7 @@ class RecurringInvoice extends Model
         foreach ($taxes as $tax) {
             $tax['company_id'] = $recurringInvoice->company_id;
 
-            if (gettype($tax['amount']) !== "NULL") {
+            if (gettype($tax['amount']) !== 'NULL') {
                 $recurringInvoice->taxes()->create($tax);
             }
         }
@@ -267,7 +267,7 @@ class RecurringInvoice extends Model
             return;
         }
 
-        if ($this->limit_by == 'DATE') {
+        if ($this->limit_by === 'DATE') {
             $startDate = Carbon::today()->format('Y-m-d');
 
             $endDate = $this->limit_date;
@@ -279,7 +279,7 @@ class RecurringInvoice extends Model
             } else {
                 $this->markStatusAsCompleted();
             }
-        } elseif ($this->limit_by == 'COUNT') {
+        } elseif ($this->limit_by === 'COUNT') {
             $invoiceCount = Invoice::where('recurring_invoice_id', $this->id)->count();
 
             if ($invoiceCount < $this->limit_count) {
@@ -353,7 +353,7 @@ class RecurringInvoice extends Model
             foreach ($this->fields as $data) {
                 $customField[] = [
                     'id' => $data->custom_field_id,
-                    'value' => $data->defaultAnswer
+                    'value' => $data->defaultAnswer,
                 ];
             }
 
@@ -361,7 +361,7 @@ class RecurringInvoice extends Model
         }
 
         //send automatically
-        if ($this->send_automatically == true) {
+        if ($this->send_automatically === true) {
             $data = [
                 'body' => CompanySetting::getSetting('invoice_mail_body', $this->company_id),
                 'from' => config('mail.from.address'),
@@ -369,7 +369,7 @@ class RecurringInvoice extends Model
                 'subject' => 'New Invoice',
                 'invoice' => $invoice->toArray(),
                 'customer' => $invoice->customer->toArray(),
-                'company' => Company::find($invoice->company_id)
+                'company' => Company::find($invoice->company_id),
             ];
 
             $invoice->send($data);
@@ -378,7 +378,7 @@ class RecurringInvoice extends Model
 
     public function markStatusAsCompleted()
     {
-        if ($this->status == $this->status) {
+        if ($this->status === $this->status) {
             $this->status = self::COMPLETED;
             $this->save();
         }

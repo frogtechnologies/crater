@@ -59,8 +59,9 @@ class CompanySetting extends Model
 
         if ($setting) {
             return $setting->value;
-        } else {
-            return null;
         }
+        return null;
+
+    
     }
 }

@@ -33,6 +33,7 @@ class UnitsController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(UnitRequest $request)
@@ -48,6 +49,7 @@ class UnitsController extends Controller
      * Display the specified resource.
      *
      * @param  \Crater\Models\Unit  $unit
+     *
      * @return \Illuminate\Http\Response
      */
     public function show(Unit $unit)
@@ -62,6 +64,7 @@ class UnitsController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Crater\Models\Unit  $unit
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(UnitRequest $request, Unit $unit)
@@ -77,6 +80,7 @@ class UnitsController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \Crater\Models\Unit  $unit
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy(Unit $unit)

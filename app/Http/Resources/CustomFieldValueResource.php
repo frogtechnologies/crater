@@ -11,6 +11,7 @@ class CustomFieldValueResource extends JsonResource
      * Transform the resource into an array.
      *
      * @param  \Illuminate\Http\Request  $request
+     *
      * @return array
      */
     public function toArray($request)
@@ -48,11 +49,11 @@ class CustomFieldValueResource extends JsonResource
             return null;
         }
 
-        if ($key == 'date_time_answer') {
+        if ($key === 'date_time_answer') {
             return $answer->format('Y-m-d H:i');
         }
 
-        if ($key == 'date_answer') {
+        if ($key === 'date_answer') {
             return $answer->format(CompanySetting::getSetting('carbon_date_format', $this->company_id));
         }
 

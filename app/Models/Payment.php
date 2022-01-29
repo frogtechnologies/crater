@@ -40,19 +40,8 @@ class Payment extends Model implements HasMedia
 
     protected $casts = [
         'notes' => 'string',
-        'exchange_rate' => 'float'
+        'exchange_rate' => 'float',
     ];
-
-    protected static function booted()
-    {
-        static::created(function ($payment) {
-            GeneratePaymentPdfJob::dispatch($payment);
-        });
-
-        static::updated(function ($payment) {
-            GeneratePaymentPdfJob::dispatch($payment, true);
-        });
-    }
 
     public function setSettingsAttribute($value)
     {
@@ -126,7 +115,7 @@ class Payment extends Model implements HasMedia
         $data['user'] = $this->customer->toArray();
         $data['company'] = Company::find($this->company_id);
         $data['body'] = $this->getEmailBody($data['body']);
-        $data['attach']['data'] = ($this->getEmailAttachmentSetting()) ? $this->getPDFData() : null;
+        $data['attach']['data'] = $this->getEmailAttachmentSetting() ? $this->getPDFData() : null;
 
         return $data;
     }
@@ -166,7 +155,7 @@ class Payment extends Model implements HasMedia
 
         $company_currency = CompanySetting::getSetting('currency', $request->header('company'));
 
-        if ((string)$payment['currency_id'] !== $company_currency) {
+        if ((string) $payment['currency_id'] !== $company_currency) {
             ExchangeRateLog::addExchangeRateLog($payment);
         }
 
@@ -176,14 +165,13 @@ class Payment extends Model implements HasMedia
             $payment->addCustomFields($customFields);
         }
 
-        $payment = Payment::with([
+        return Payment::with([
             'customer',
             'invoice',
             'paymentMethod',
-            'fields'
+            'fields',
         ])->find($payment->id);
-
-        return $payment;
+    
     }
 
     public function updatePayment($request)
@@ -218,7 +206,7 @@ class Payment extends Model implements HasMedia
 
         $company_currency = CompanySetting::getSetting('currency', $request->header('company'));
 
-        if ((string)$data['currency_id'] !== $company_currency) {
+        if ((string) $data['currency_id'] !== $company_currency) {
             ExchangeRateLog::addExchangeRateLog($this);
         }
 
@@ -228,14 +216,12 @@ class Payment extends Model implements HasMedia
             $this->updateCustomFields($customFields);
         }
 
-        $payment = Payment::with([
+        return Payment::with([
             'customer',
             'invoice',
             'paymentMethod',
         ])
             ->find($this->id);
-
-        return $payment;
     }
 
     public static function deletePayments($ids)
@@ -243,11 +229,11 @@ class Payment extends Model implements HasMedia
         foreach ($ids as $id) {
             $payment = Payment::find($id);
 
-            if ($payment->invoice_id != null) {
+            if ($payment->invoice_id !== null) {
                 $invoice = Invoice::find($payment->invoice_id);
-                $invoice->due_amount = ((int)$invoice->due_amount + (int)$payment->amount);
+                $invoice->due_amount = (int) $invoice->due_amount + (int) $payment->amount;
 
-                if ($invoice->due_amount == $invoice->total) {
+                if ($invoice->due_amount === $invoice->total) {
                     $invoice->paid_status = Invoice::STATUS_UNPAID;
                 } else {
                     $invoice->paid_status = Invoice::STATUS_PARTIALLY_PAID;
@@ -286,7 +272,7 @@ class Payment extends Model implements HasMedia
 
     public function scopePaginateData($query, $limit)
     {
-        if ($limit == 'all') {
+        if ($limit === 'all') {
             return $query->get();
         }
 
@@ -404,7 +390,7 @@ class Payment extends Model implements HasMedia
     {
         $paymentAsAttachment = CompanySetting::getSetting('payment_email_attachment', $this->company_id);
 
-        if ($paymentAsAttachment == 'NO') {
+        if ($paymentAsAttachment === 'NO') {
             return false;
         }
 
@@ -432,7 +418,7 @@ class Payment extends Model implements HasMedia
             '{PAYMENT_MODE}' => $this->paymentMethod ? $this->paymentMethod->name : null,
             '{PAYMENT_NUMBER}' => $this->payment_number,
             '{PAYMENT_AMOUNT}' => $this->reference_number,
-            '{PAYMENT_LINK}' => url('/customer/payments/pdf/'.$this->unique_hash)
+            '{PAYMENT_LINK}' => url('/customer/payments/pdf/'.$this->unique_hash),
         ];
     }
 
@@ -467,5 +453,16 @@ class Payment extends Model implements HasMedia
         $invoice->subtractInvoicePayment($invoice->total);
 
         return $payment;
+    }
+
+    protected static function booted()
+    {
+        static::created(function ($payment) {
+            GeneratePaymentPdfJob::dispatch($payment);
+        });
+
+        static::updated(function ($payment) {
+            GeneratePaymentPdfJob::dispatch($payment, true);
+        });
     }
 }

@@ -34,6 +34,7 @@ class TaxTypesController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(TaxTypeRequest $request)
@@ -49,6 +50,7 @@ class TaxTypesController extends Controller
      * Display the specified resource.
      *
      * @param  \Crater\Models\TaxType  $taxType
+     *
      * @return \Illuminate\Http\Response
      */
     public function show(TaxType $taxType)
@@ -63,6 +65,7 @@ class TaxTypesController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Crater\Models\TaxType  $taxType
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(TaxTypeRequest $request, TaxType $taxType)
@@ -78,6 +81,7 @@ class TaxTypesController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \Crater\Models\TaxType  $taxType
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy(TaxType $taxType)

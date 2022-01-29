@@ -23,7 +23,7 @@ class Customer extends Authenticatable implements HasMedia
     use HasRolesAndAbilities;
 
     protected $guarded = [
-        'id'
+        'id',
     ];
 
     protected $hidden = [
@@ -37,7 +37,7 @@ class Customer extends Authenticatable implements HasMedia
 
     protected $appends = [
         'formattedCreatedAt',
-        'avatar'
+        'avatar',
     ];
 
     protected $casts = [
@@ -53,7 +53,7 @@ class Customer extends Authenticatable implements HasMedia
 
     public function setPasswordAttribute($value)
     {
-        if ($value != null) {
+        if ($value !== null) {
             $this->attributes['password'] = bcrypt($value);
         }
     }
@@ -123,7 +123,7 @@ class Customer extends Authenticatable implements HasMedia
         $avatar = $this->getMedia('customer_avatar')->first();
 
         if ($avatar) {
-            return  asset($avatar->getUrl());
+            return asset($avatar->getUrl());
         }
 
         return 0;
@@ -192,9 +192,8 @@ class Customer extends Authenticatable implements HasMedia
             $customer->addCustomFields($customFields);
         }
 
-        $customer = Customer::with('billingAddress', 'shippingAddress', 'fields')->find($customer->id);
-
-        return $customer;
+        return Customer::with('billingAddress', 'shippingAddress', 'fields')->find($customer->id);
+    
     }
 
     public static function updateCustomer($request, $customer)
@@ -227,14 +226,13 @@ class Customer extends Authenticatable implements HasMedia
             $customer->updateCustomFields($customFields);
         }
 
-        $customer = Customer::with('billingAddress', 'shippingAddress', 'fields')->find($customer->id);
-
-        return $customer;
+        return Customer::with('billingAddress', 'shippingAddress', 'fields')->find($customer->id);
+    
     }
 
     public function scopePaginateData($query, $limit)
     {
-        if ($limit == 'all') {
+        if ($limit === 'all') {
             return $query->get();
         }
 

@@ -30,16 +30,18 @@ class ExpensesController extends Controller
             ->select('expenses.*', 'expense_categories.name', 'customers.name as user_name')
             ->paginateData($limit);
 
-        return (ExpenseResource::collection($expenses))
+        return ExpenseResource::collection($expenses)
             ->additional(['meta' => [
                 'expense_total_count' => Expense::whereCompany()->count(),
-            ]]);
+            ],
+            ]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Crater\Http\Requests\ExpenseRequest $request
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function store(ExpenseRequest $request)
@@ -55,6 +57,7 @@ class ExpensesController extends Controller
      * Display the specified resource.
      *
      * @param  \Crater\Models\Expense $expense
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function show(Expense $expense)
@@ -69,6 +72,7 @@ class ExpensesController extends Controller
      *
      * @param  \Crater\Http\Requests\ExpenseRequest $request
      * @param  \Crater\Models\Expense $expense
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function update(ExpenseRequest $request, Expense $expense)

@@ -29,8 +29,8 @@ class ExchangeRateLogRequest extends FormRequest
                 'required',
             ],
             'currency_id' => [
-                'required'
-            ]
+                'required',
+            ],
         ];
     }
 

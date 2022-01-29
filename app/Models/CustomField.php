@@ -15,7 +15,7 @@ class CustomField extends Model
 
     protected $dates = [
         'date_answer',
-        'date_time_answer'
+        'date_time_answer',
     ];
 
     protected $appends = [
@@ -28,8 +28,8 @@ class CustomField extends Model
 
     public function setTimeAnswerAttribute($value)
     {
-        if ($value && $value != null) {
-            $this->attributes['time_answer'] = date("H:i:s", strtotime($value));
+        if ($value && $value !== null) {
+            $this->attributes['time_answer'] = date('H:i:s', strtotime($value));
         }
     }
 
@@ -75,7 +75,7 @@ class CustomField extends Model
 
     public function scopePaginateData($query, $limit)
     {
-        if ($limit == 'all') {
+        if ($limit === 'all') {
             return $query->get();
         }
 

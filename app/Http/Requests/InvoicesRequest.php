@@ -39,10 +39,10 @@ class InvoicesRequest extends FormRequest
             ],
             'invoice_number' => [
                 'required',
-                Rule::unique('invoices')->where('company_id', $this->header('company'))
+                Rule::unique('invoices')->where('company_id', $this->header('company')),
             ],
             'exchange_rate' => [
-                'nullable'
+                'nullable',
             ],
             'discount' => [
                 'required',
@@ -60,7 +60,7 @@ class InvoicesRequest extends FormRequest
                 'required',
             ],
             'template_name' => [
-                'required'
+                'required',
             ],
             'items' => [
                 'required',
@@ -89,11 +89,11 @@ class InvoicesRequest extends FormRequest
         $customer = Customer::find($this->customer_id);
 
         if ($customer && $companyCurrency) {
-            if ((string)$customer->currency_id !== $companyCurrency) {
+            if ((string) $customer->currency_id !== $companyCurrency) {
                 $rules['exchange_rate'] = [
                     'required',
                 ];
-            };
+            }
         }
 
         if ($this->isMethod('PUT')) {
@@ -112,7 +112,7 @@ class InvoicesRequest extends FormRequest
     {
         $company_currency = CompanySetting::getSetting('currency', $this->header('company'));
         $current_currency = $this->currency_id;
-        $exchange_rate = $company_currency != $current_currency ? $this->exchange_rate : 1;
+        $exchange_rate = $company_currency !== $current_currency ? $this->exchange_rate : 1;
         $currency = Customer::find($this->customer_id)->currency_id;
 
         return collect($this->except('items', 'taxes'))

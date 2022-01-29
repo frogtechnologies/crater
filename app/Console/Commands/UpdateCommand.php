@@ -48,9 +48,9 @@ class UpdateCommand extends Command
 
         $this->installed = $this->getInstalledVersion();
         $this->response = $this->getLatestVersionResponse();
-        $this->version = ($this->response) ? $this->response->version : false;
+        $this->version = $this->response ? $this->response->version : false;
 
-        if ($this->response == 'extension_required') {
+        if ($this->response === 'extension_required') {
             $this->info('Sorry! Your system does not meet the minimum requirements for this update.');
             $this->info('Please retry after installing the required version/extensions.');
 

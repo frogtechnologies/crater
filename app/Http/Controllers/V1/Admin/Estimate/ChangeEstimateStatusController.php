@@ -9,12 +9,13 @@ use Illuminate\Http\Request;
 class ChangeEstimateStatusController extends Controller
 {
     /**
-    * Handle the incoming request.
-    *
-    * @param  \Illuminate\Http\Request  $request
-    * @param  Estimate $estimate
-    * @return \Illuminate\Http\Response
-    */
+     * Handle the incoming request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  Estimate $estimate
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function __invoke(Request $request, Estimate $estimate)
     {
         $this->authorize('send estimate', $estimate);

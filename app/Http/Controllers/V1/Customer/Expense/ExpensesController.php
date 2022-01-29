@@ -31,16 +31,18 @@ class ExpensesController extends Controller
             ]))
             ->paginateData($limit);
 
-        return (ExpenseResource::collection($expenses))
+        return ExpenseResource::collection($expenses)
             ->additional(['meta' => [
                 'expenseTotalCount' => Expense::whereCustomer(Auth::guard('customer')->id())->count(),
-            ]]);
+            ],
+            ]);
     }
 
     /**
      * Display the specified resource.
      *
      * @param  \Crater\Models\Expense  $expense
+     *
      * @return \Illuminate\Http\Response
      */
     public function show(Company $company, $id)

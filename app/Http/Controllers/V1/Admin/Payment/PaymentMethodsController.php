@@ -34,6 +34,7 @@ class PaymentMethodsController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(PaymentMethodRequest $request)
@@ -49,6 +50,7 @@ class PaymentMethodsController extends Controller
      * Display the specified resource.
      *
      * @param  \Crater\Models\PaymentMethod  $paymentMethod
+     *
      * @return \Illuminate\Http\Response
      */
     public function show(PaymentMethod $paymentMethod)
@@ -63,6 +65,7 @@ class PaymentMethodsController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Crater\Models\PaymentMethod  $paymentMethod
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(PaymentMethodRequest $request, PaymentMethod $paymentMethod)
@@ -78,6 +81,7 @@ class PaymentMethodsController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \Crater\Models\PaymentMethod  $paymentMethod
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy(PaymentMethod $paymentMethod)

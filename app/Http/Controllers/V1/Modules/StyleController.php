@@ -14,6 +14,7 @@ class StyleController extends Controller
      * Serve the requested stylesheet.
      *
      * @param  \Request  $request
+     *
      * @return \Illuminate\Http\Response
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException

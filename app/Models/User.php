@@ -31,7 +31,7 @@ class User extends Authenticatable implements HasMedia
      * @var array
      */
     protected $guarded = [
-        'id'
+        'id',
     ];
 
     /**
@@ -57,6 +57,7 @@ class User extends Authenticatable implements HasMedia
      * Find the user instance for the given username.
      *
      * @param  string  $username
+     *
      * @return \App\User
      */
     public function findForPassport($username)
@@ -66,14 +67,14 @@ class User extends Authenticatable implements HasMedia
 
     public function setPasswordAttribute($value)
     {
-        if ($value != null) {
+        if ($value !== null) {
             $this->attributes['password'] = bcrypt($value);
         }
     }
 
     public function isSuperAdminOrAdmin()
     {
-        return ($this->role == 'super admin') || ($this->role == 'admin');
+        return ($this->role === 'super admin') || ($this->role === 'admin');
     }
 
     public static function login($request)
@@ -82,7 +83,7 @@ class User extends Authenticatable implements HasMedia
         $email = $request->email;
         $password = $request->password;
 
-        return (\Auth::attempt(['email' => $email, 'password' => $password], $remember));
+        return \Auth::attempt(['email' => $email, 'password' => $password], $remember);
     }
 
     public function getFormattedCreatedAtAttribute($value)
@@ -208,7 +209,7 @@ class User extends Authenticatable implements HasMedia
 
     public function scopePaginateData($query, $limit)
     {
-        if ($limit == 'all') {
+        if ($limit === 'all') {
             return $query->get();
         }
 
@@ -273,7 +274,7 @@ class User extends Authenticatable implements HasMedia
         $avatar = $this->getMedia('admin_avatar')->first();
 
         if ($avatar) {
-            return  asset($avatar->getUrl());
+            return asset($avatar->getUrl());
         }
 
         return 0;
@@ -320,11 +321,11 @@ class User extends Authenticatable implements HasMedia
         if (Schema::hasColumn('companies', 'owner_id')) {
             $company = Company::find(request()->header('company'));
 
-            if ($company && $this->id == $company->owner_id) {
+            if ($company && $this->id === $company->owner_id) {
                 return true;
             }
         } else {
-            return $this->role == 'super admin' || $this->role == 'admin';
+            return $this->role === 'super admin' || $this->role === 'admin';
         }
 
         return false;
@@ -372,15 +373,15 @@ class User extends Authenticatable implements HasMedia
             return true;
         }
 
-        if ((! $data->data['owner_only']) && empty($data->data['ability'])) {
+        if (! $data->data['owner_only'] && empty($data->data['ability'])) {
             return true;
         }
 
-        if ((! $data->data['owner_only']) && (! empty($data->data['ability'])) && (! empty($data->data['model'])) && $this->can($data->data['ability'], $data->data['model'])) {
+        if (! $data->data['owner_only'] && (! empty($data->data['ability'])) && (! empty($data->data['model'])) && $this->can($data->data['ability'], $data->data['model'])) {
             return true;
         }
 
-        if ((! $data->data['owner_only']) && $this->can($data->data['ability'])) {
+        if (! $data->data['owner_only'] && $this->can($data->data['ability'])) {
             return true;
         }
 

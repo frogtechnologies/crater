@@ -34,7 +34,7 @@ class ExpenseRequest extends FormRequest
                 'required',
             ],
             'exchange_rate' => [
-                'nullable'
+                'nullable',
             ],
             'payment_method_id' => [
                 'nullable',
@@ -49,14 +49,14 @@ class ExpenseRequest extends FormRequest
                 'nullable',
             ],
             'currency_id' => [
-                'required'
+                'required',
             ],
             'attachment_receipt' => [
                 'nullable',
                 'file',
                 'mimes:jpg,png,pdf,doc,docx,xls,xlsx,ppt,pptx',
-                'max:20000'
-            ]
+                'max:20000',
+            ],
         ];
 
         if ($companyCurrency && $this->currency_id) {
@@ -64,7 +64,7 @@ class ExpenseRequest extends FormRequest
                 $rules['exchange_rate'] = [
                     'required',
                 ];
-            };
+            }
         }
 
         return $rules;
@@ -74,7 +74,7 @@ class ExpenseRequest extends FormRequest
     {
         $company_currency = CompanySetting::getSetting('currency', $this->header('company'));
         $current_currency = $this->currency_id;
-        $exchange_rate = $company_currency != $current_currency ? $this->exchange_rate : 1;
+        $exchange_rate = $company_currency !== $current_currency ? $this->exchange_rate : 1;
 
         return collect($this->validated())
             ->merge([
@@ -82,7 +82,7 @@ class ExpenseRequest extends FormRequest
                 'company_id' => $this->header('company'),
                 'exchange_rate' => $exchange_rate,
                 'base_amount' => $this->amount * $exchange_rate,
-                'currency_id' => $current_currency
+                'currency_id' => $current_currency,
             ])
             ->toArray();
     }

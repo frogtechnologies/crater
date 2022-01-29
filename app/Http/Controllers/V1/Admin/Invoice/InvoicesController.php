@@ -30,16 +30,18 @@ class InvoicesController extends Controller
             ->latest()
             ->paginateData($limit);
 
-        return (InvoiceResource::collection($invoices))
+        return InvoiceResource::collection($invoices)
             ->additional(['meta' => [
                 'invoice_total_count' => Invoice::whereCompany()->count(),
-            ]]);
+            ],
+            ]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function store(Requests\InvoicesRequest $request)
@@ -61,6 +63,7 @@ class InvoicesController extends Controller
      * Display the specified resource.
      *
      * @param  \Crater\Models\Invoice $invoice
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function show(Request $request, Invoice $invoice)
@@ -75,6 +78,7 @@ class InvoicesController extends Controller
      *
      * @param  \Illuminate\Http\Request $request
      * @param  Invoice $invoice
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function update(Requests\InvoicesRequest $request, Invoice $invoice)
@@ -96,6 +100,7 @@ class InvoicesController extends Controller
      * delete the specified resources in storage.
      *
      * @param  \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function delete(DeleteInvoiceRequest $request)

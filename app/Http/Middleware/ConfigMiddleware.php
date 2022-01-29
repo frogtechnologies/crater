@@ -14,6 +14,7 @@ class ConfigMiddleware
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
+     *
      * @return mixed
      */
     public function handle($request, Closure $next)
@@ -23,7 +24,7 @@ class ConfigMiddleware
 
             $timezone = config('app.timezone');
 
-            if ($setting && $setting != null && $setting != $timezone) {
+            if ($setting && $setting !== null && $setting !== $timezone) {
                 config(['app.timezone' => $setting]);
                 date_default_timezone_set($setting);
             }

@@ -16,6 +16,7 @@ class ExpenseCategoryPolicy
      * Determine whether the user can view any models.
      *
      * @param  \Crater\Models\User  $user
+     *
      * @return mixed
      */
     public function viewAny(User $user)
@@ -32,6 +33,7 @@ class ExpenseCategoryPolicy
      *
      * @param  \Crater\Models\User  $user
      * @param  \Crater\Models\ExpenseCategory  $expenseCategory
+     *
      * @return mixed
      */
     public function view(User $user, ExpenseCategory $expenseCategory)
@@ -47,6 +49,7 @@ class ExpenseCategoryPolicy
      * Determine whether the user can create models.
      *
      * @param  \Crater\Models\User  $user
+     *
      * @return mixed
      */
     public function create(User $user)
@@ -63,6 +66,7 @@ class ExpenseCategoryPolicy
      *
      * @param  \Crater\Models\User  $user
      * @param  \Crater\Models\ExpenseCategory  $expenseCategory
+     *
      * @return mixed
      */
     public function update(User $user, ExpenseCategory $expenseCategory)
@@ -79,6 +83,7 @@ class ExpenseCategoryPolicy
      *
      * @param  \Crater\Models\User  $user
      * @param  \Crater\Models\ExpenseCategory  $expenseCategory
+     *
      * @return mixed
      */
     public function delete(User $user, ExpenseCategory $expenseCategory)
@@ -95,6 +100,7 @@ class ExpenseCategoryPolicy
      *
      * @param  \Crater\Models\User  $user
      * @param  \Crater\Models\ExpenseCategory  $expenseCategory
+     *
      * @return mixed
      */
     public function restore(User $user, ExpenseCategory $expenseCategory)
@@ -111,6 +117,7 @@ class ExpenseCategoryPolicy
      *
      * @param  \Crater\Models\User  $user
      * @param  \Crater\Models\ExpenseCategory  $expenseCategory
+     *
      * @return mixed
      */
     public function forceDelete(User $user, ExpenseCategory $expenseCategory)

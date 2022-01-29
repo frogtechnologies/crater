@@ -13,6 +13,7 @@ class LoginController extends Controller
      * Handle the incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function __invoke(Request $request)
@@ -23,7 +24,7 @@ class LoginController extends Controller
         return response()->json([
             'success' => true,
             'user' => $user,
-            'company' => $user->companies()->first()
+            'company' => $user->companies()->first(),
         ]);
     }
 }

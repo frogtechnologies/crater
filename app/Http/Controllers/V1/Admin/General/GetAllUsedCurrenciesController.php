@@ -16,6 +16,7 @@ class GetAllUsedCurrenciesController extends Controller
      * Handle the incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function __invoke(Request $request)
@@ -31,7 +32,7 @@ class GetAllUsedCurrenciesController extends Controller
         $currencies = array_merge($invoices, $taxes, $estimates, $payments);
 
         return response()->json([
-            'currencies' => Currency::whereIn('id', $currencies)->get()
+            'currencies' => Currency::whereIn('id', $currencies)->get(),
         ]);
     }
 }

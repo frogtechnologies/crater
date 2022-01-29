@@ -9,17 +9,17 @@ class TaxType extends Model
 {
     use HasFactory;
 
+    public const TYPE_GENERAL = 'GENERAL';
+    public const TYPE_MODULE = 'MODULE';
+
     protected $guarded = [
         'id',
     ];
 
     protected $casts = [
         'percent' => 'float',
-        'compound_tax' => 'boolean'
+        'compound_tax' => 'boolean',
     ];
-
-    public const TYPE_GENERAL = 'GENERAL';
-    public const TYPE_MODULE = 'MODULE';
 
     public function taxes()
     {
@@ -76,7 +76,7 @@ class TaxType extends Model
 
     public function scopePaginateData($query, $limit)
     {
-        if ($limit == 'all') {
+        if ($limit === 'all') {
             return $query->get();
         }
 

@@ -26,6 +26,7 @@ class ForgotPasswordController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  string  $response
+     *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
      */
     protected function sendResetLinkResponse(Request $request, $response)
@@ -41,12 +42,13 @@ class ForgotPasswordController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  string  $response
+     *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
      */
     protected function sendResetLinkFailedResponse(Request $request, $response)
     {
         return response()->json([
-            'error' => 'Email could not be sent to this email address.'
+            'error' => 'Email could not be sent to this email address.',
         ], 403);
     }
 }

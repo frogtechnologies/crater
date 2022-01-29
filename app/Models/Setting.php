@@ -49,9 +49,10 @@ class Setting extends Model
 
         if ($setting) {
             return $setting->value;
-        } else {
-            return null;
         }
+        return null;
+
+    
     }
 
     public static function getSettings($settings)

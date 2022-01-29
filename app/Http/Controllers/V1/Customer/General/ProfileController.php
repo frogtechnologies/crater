@@ -21,7 +21,7 @@ class ProfileController extends Controller
             $customer->clearMediaCollection('customer_avatar');
 
             $customer->addMediaFromRequest('customer_avatar')
-            ->toMediaCollection('customer_avatar');
+                ->toMediaCollection('customer_avatar');
         }
 
         if ($request->billing !== null) {

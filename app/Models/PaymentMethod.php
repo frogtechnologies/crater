@@ -9,16 +9,16 @@ class PaymentMethod extends Model
 {
     use HasFactory;
 
-    protected $guarded = [
-        'id'
-    ];
-
     public const TYPE_GENERAL = 'GENERAL';
     public const TYPE_MODULE = 'MODULE';
 
+    protected $guarded = [
+        'id',
+    ];
+
     protected $casts = [
         'settings' => 'array',
-        'use_test_env' => 'boolean'
+        'use_test_env' => 'boolean',
     ];
 
     public function setSettingsAttribute($value)
@@ -80,7 +80,7 @@ class PaymentMethod extends Model
 
     public function scopePaginateData($query, $limit)
     {
-        if ($limit == 'all') {
+        if ($limit === 'all') {
             return $query->get();
         }
 
@@ -91,16 +91,12 @@ class PaymentMethod extends Model
     {
         $data = $request->getPaymentMethodPayload();
 
-        $paymentMethod = self::create($data);
-
-        return $paymentMethod;
+        return self::create($data);
     }
 
     public static function getSettings($id)
     {
-        $settings = PaymentMethod::find($id)
+        return PaymentMethod::find($id)
             ->settings;
-
-        return $settings;
     }
 }

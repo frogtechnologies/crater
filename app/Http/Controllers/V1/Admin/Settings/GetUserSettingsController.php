@@ -11,6 +11,7 @@ class GetUserSettingsController extends Controller
      * Handle the incoming request.
      *
      * @param  \Illuminate\Http\GetSettingsRequest  $request
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function __invoke(GetSettingsRequest $request)

@@ -36,6 +36,7 @@ class RolesController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(RoleRequest $request)
@@ -53,6 +54,7 @@ class RolesController extends Controller
      * Display the specified resource.
      *
      * @param  \Spatie\Permission\Models\Role $role
+     *
      * @return \Illuminate\Http\Response
      */
     public function show(Role $role)
@@ -67,6 +69,7 @@ class RolesController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Spatie\Permission\Models\Role $role
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(RoleRequest $request, Role $role)
@@ -84,6 +87,7 @@ class RolesController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \Spatie\Permission\Models\Role $role
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy(Role $role)
@@ -99,7 +103,7 @@ class RolesController extends Controller
         $role->delete();
 
         return response()->json([
-            'success' => true
+            'success' => true,
         ]);
     }
 

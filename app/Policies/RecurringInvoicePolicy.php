@@ -15,6 +15,7 @@ class RecurringInvoicePolicy
      * Determine whether the user can view any models.
      *
      * @param  \Crater\Models\User  $user
+     *
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function viewAny(User $user)
@@ -31,6 +32,7 @@ class RecurringInvoicePolicy
      *
      * @param  \Crater\Models\User  $user
      * @param  \Crater\Models\RecurringInvoice  $recurringInvoice
+     *
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function view(User $user, RecurringInvoice $recurringInvoice)
@@ -46,6 +48,7 @@ class RecurringInvoicePolicy
      * Determine whether the user can create models.
      *
      * @param  \Crater\Models\User  $user
+     *
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function create(User $user)
@@ -62,6 +65,7 @@ class RecurringInvoicePolicy
      *
      * @param  \Crater\Models\User  $user
      * @param  \Crater\Models\RecurringInvoice  $recurringInvoice
+     *
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function update(User $user, RecurringInvoice $recurringInvoice)
@@ -78,6 +82,7 @@ class RecurringInvoicePolicy
      *
      * @param  \Crater\Models\User  $user
      * @param  \Crater\Models\RecurringInvoice  $recurringInvoice
+     *
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function delete(User $user, RecurringInvoice $recurringInvoice)
@@ -94,6 +99,7 @@ class RecurringInvoicePolicy
      *
      * @param  \Crater\Models\User  $user
      * @param  \Crater\Models\RecurringInvoice  $recurringInvoice
+     *
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function restore(User $user, RecurringInvoice $recurringInvoice)
@@ -110,6 +116,7 @@ class RecurringInvoicePolicy
      *
      * @param  \Crater\Models\User  $user
      * @param  \Crater\Models\RecurringInvoice  $recurringInvoice
+     *
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function forceDelete(User $user, RecurringInvoice $recurringInvoice)
@@ -125,6 +132,7 @@ class RecurringInvoicePolicy
      * Determine whether the user can delete models.
      *
      * @param  \Crater\Models\User  $user
+     *
      * @return mixed
      */
     public function deleteMultiple(User $user)

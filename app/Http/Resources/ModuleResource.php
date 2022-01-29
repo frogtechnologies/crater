@@ -13,6 +13,7 @@ class ModuleResource extends JsonResource
      * Transform the resource into an array.
      *
      * @param  \Illuminate\Http\Request  $request
+     *
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
     public function toArray($request)
@@ -50,7 +51,7 @@ class ModuleResource extends JsonResource
             'update_available' => $this->updateAvailable(),
             'video_link' => $this->video_link,
             'video_thumbnail' => $this->video_thumbnail,
-            'links' => $this->links
+            'links' => $this->links,
         ];
     }
 

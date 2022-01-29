@@ -30,6 +30,7 @@ class ExchangeRateProviderController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(ExchangeRateProviderRequest $request)
@@ -44,7 +45,7 @@ class ExchangeRateProviderController extends Controller
 
         $checkConverterApi = ExchangeRateProvider::checkExchangeRateProviderStatus($request);
 
-        if ($checkConverterApi->status() == 200) {
+        if ($checkConverterApi->status() === 200) {
             $exchangeRateProvider = ExchangeRateProvider::createFromRequest($request);
 
             return new ExchangeRateProviderResource($exchangeRateProvider);
@@ -57,6 +58,7 @@ class ExchangeRateProviderController extends Controller
      * Display the specified resource.
      *
      * @param  \Crater\Models\ExchangeRateProvider  $exchangeRateProvider
+     *
      * @return \Illuminate\Http\Response
      */
     public function show(ExchangeRateProvider $exchangeRateProvider)
@@ -71,6 +73,7 @@ class ExchangeRateProviderController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Crater\Models\ExchangeRateProvider  $exchangeRateProvider
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(ExchangeRateProviderRequest $request, ExchangeRateProvider $exchangeRateProvider)
@@ -85,7 +88,7 @@ class ExchangeRateProviderController extends Controller
 
         $checkConverterApi = ExchangeRateProvider::checkExchangeRateProviderStatus($request);
 
-        if ($checkConverterApi->status() == 200) {
+        if ($checkConverterApi->status() === 200) {
             $exchangeRateProvider->updateFromRequest($request);
 
             return new ExchangeRateProviderResource($exchangeRateProvider);
@@ -98,13 +101,14 @@ class ExchangeRateProviderController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \Crater\Models\ExchangeRateProvider  $exchangeRateProvider
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy(ExchangeRateProvider $exchangeRateProvider)
     {
         $this->authorize('delete', $exchangeRateProvider);
 
-        if ($exchangeRateProvider->active == true) {
+        if ($exchangeRateProvider->active === true) {
             return respondJson('provider_active', 'Provider Active.');
         }
 

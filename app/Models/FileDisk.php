@@ -48,7 +48,7 @@ class FileDisk extends Model
 
     public function scopePaginateData($query, $limit)
     {
-        if ($limit == 'all') {
+        if ($limit === 'all') {
             return $query->get();
         }
 
@@ -116,7 +116,7 @@ class FileDisk extends Model
 
         try {
             $root = '';
-            if ($disk == 'dropbox') {
+            if ($disk === 'dropbox') {
                 $root = $credentials['root'].'/';
             }
             \Storage::disk($prefix.$disk)->put($root.'crater_temp.text', 'Check Credentials');
@@ -138,15 +138,13 @@ class FileDisk extends Model
             self::updateDefaultDisks();
         }
 
-        $disk = self::create([
+        return self::create([
             'credentials' => $request->credentials,
             'name' => $request->name,
             'driver' => $request->driver,
             'set_as_default' => $request->set_as_default,
             'company_id' => $request->header('company'),
         ]);
-
-        return $disk;
     }
 
     public static function updateDefaultDisks()

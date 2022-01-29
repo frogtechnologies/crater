@@ -15,6 +15,7 @@ class InvoicePolicy
      * Determine whether the user can view any models.
      *
      * @param  \Crater\Models\User  $user
+     *
      * @return mixed
      */
     public function viewAny(User $user)
@@ -31,6 +32,7 @@ class InvoicePolicy
      *
      * @param  \Crater\Models\User  $user
      * @param  \Crater\Models\Invoice  $invoice
+     *
      * @return mixed
      */
     public function view(User $user, Invoice $invoice)
@@ -46,6 +48,7 @@ class InvoicePolicy
      * Determine whether the user can create models.
      *
      * @param  \Crater\Models\User  $user
+     *
      * @return mixed
      */
     public function create(User $user)
@@ -62,6 +65,7 @@ class InvoicePolicy
      *
      * @param  \Crater\Models\User  $user
      * @param  \Crater\Models\Invoice  $invoice
+     *
      * @return mixed
      */
     public function update(User $user, Invoice $invoice)
@@ -78,6 +82,7 @@ class InvoicePolicy
      *
      * @param  \Crater\Models\User  $user
      * @param  \Crater\Models\Invoice  $invoice
+     *
      * @return mixed
      */
     public function delete(User $user, Invoice $invoice)
@@ -94,6 +99,7 @@ class InvoicePolicy
      *
      * @param  \Crater\Models\User  $user
      * @param  \Crater\Models\Invoice  $invoice
+     *
      * @return mixed
      */
     public function restore(User $user, Invoice $invoice)
@@ -110,6 +116,7 @@ class InvoicePolicy
      *
      * @param  \Crater\Models\User  $user
      * @param  \Crater\Models\Invoice  $invoice
+     *
      * @return mixed
      */
     public function forceDelete(User $user, Invoice $invoice)
@@ -126,6 +133,7 @@ class InvoicePolicy
      *
      * @param  \Crater\Models\User  $user
      * @param  \Crater\Models\Payment  $payment
+     *
      * @return mixed
      */
     public function send(User $user, Invoice $invoice)
@@ -141,6 +149,7 @@ class InvoicePolicy
      * Determine whether the user can delete models.
      *
      * @param  \Crater\Models\User  $user
+     *
      * @return mixed
      */
     public function deleteMultiple(User $user)

@@ -12,6 +12,7 @@ class RoleResource extends JsonResource
      * Transform the resource into an array.
      *
      * @param  \Illuminate\Http\Request  $request
+     *
      * @return array
      */
     public function toArray($request)
@@ -22,7 +23,7 @@ class RoleResource extends JsonResource
             'title' => $this->title,
             'level' => $this->level,
             'formatted_created_at' => $this->getFormattedAt(),
-            'abilities' => $this->getAbilities()
+            'abilities' => $this->getAbilities(),
         ];
     }
 

@@ -20,7 +20,7 @@ trait GeneratesPdfTrait
             ]);
         }
 
-        $locale = CompanySetting::getSetting('language',  $this->company_id);
+        $locale = CompanySetting::getSetting('language', $this->company_id);
 
         App::setLocale($locale);
 
@@ -48,7 +48,7 @@ trait GeneratesPdfTrait
 
                 $path = null;
 
-                if ($file_disk->driver == 'local') {
+                if ($file_disk->driver === 'local') {
                     $path = $media->getPath();
                 } else {
                     $path = $media->getTemporaryUrl(Carbon::now()->addMinutes(5));
@@ -68,13 +68,13 @@ trait GeneratesPdfTrait
 
     public function generatePDF($collection_name, $file_name, $deleteExistingFile = false)
     {
-        $save_pdf_to_disk = CompanySetting::getSetting('save_pdf_to_disk',  $this->company_id);
+        $save_pdf_to_disk = CompanySetting::getSetting('save_pdf_to_disk', $this->company_id);
 
-        if ($save_pdf_to_disk == 'NO') {
+        if ($save_pdf_to_disk === 'NO') {
             return 0;
         }
 
-        $locale = CompanySetting::getSetting('language',  $this->company_id);
+        $locale = CompanySetting::getSetting('language', $this->company_id);
 
         App::setLocale($locale);
 
@@ -175,10 +175,9 @@ trait GeneratesPdfTrait
 
         $str = preg_replace("/<[^\/>]*>([\s]?)*<\/[^>]*>/", '', $str);
 
-        $str = str_replace("<p>", "", $str);
+        $str = str_replace('<p>', '', $str);
 
-        $str = str_replace("</p>", "</br>", $str);
-
-        return $str;
+        return str_replace('</p>', '</br>', $str);
+    
     }
 }

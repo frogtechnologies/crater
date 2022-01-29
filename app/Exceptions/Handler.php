@@ -13,7 +13,7 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontReport = [
-        //
+
     ];
 
     /**
@@ -32,6 +32,7 @@ class Handler extends ExceptionHandler
      * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
      *
      * @param  \Throwable $exception
+     *
      * @return void
      */
     public function report(Throwable $exception)
@@ -44,6 +45,7 @@ class Handler extends ExceptionHandler
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Throwable  $exception
+     *
      * @return \Illuminate\Http\Response
      */
     public function render($request, Throwable $exception)

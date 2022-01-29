@@ -22,6 +22,7 @@ class BootstrapController extends Controller
      * Handle the incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function __invoke(Request $request)
@@ -37,7 +38,7 @@ class BootstrapController extends Controller
 
         $current_company = Company::find($request->header('company'));
 
-        if ((! $current_company) || ($current_company && ! $current_user->hasCompany($current_company->id))) {
+        if (! $current_company || ($current_company && ! $current_user->hasCompany($current_company->id))) {
             $current_company = $current_user->companies()->first();
         }
 

@@ -11,6 +11,7 @@ class UpdateUserSettingsController extends Controller
      * Handle the incoming request.
      *
      * @param  \Illuminate\Http\UpdateSettingsRequest  $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function __invoke(UpdateSettingsRequest $request)

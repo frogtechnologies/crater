@@ -20,6 +20,7 @@ class ConvertEstimateController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Crater\Models\Estimate $estimate
+     *
      * @return \Illuminate\Http\Response
      */
     public function __invoke(Request $request, Estimate $estimate, Invoice $invoice)

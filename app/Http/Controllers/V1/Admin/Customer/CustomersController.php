@@ -35,16 +35,18 @@ class CustomersController extends Controller
             ->leftJoin('invoices', 'customers.id', '=', 'invoices.customer_id')
             ->paginateData($limit);
 
-        return (CustomerResource::collection($customers))
+        return CustomerResource::collection($customers)
             ->additional(['meta' => [
                 'customer_total_count' => Customer::whereCompany()->count(),
-            ]]);
+            ],
+            ]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function store(Requests\CustomerRequest $request)
@@ -60,6 +62,7 @@ class CustomersController extends Controller
      * Display the specified resource.
      *
      * @param  Customer $customer
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function show(Customer $customer)
@@ -74,6 +77,7 @@ class CustomersController extends Controller
      *
      * @param  \Illuminate\Http\Request $request
      * @param  \Crater\Models\Customer $customer
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function update(Requests\CustomerRequest $request, Customer $customer)
@@ -93,6 +97,7 @@ class CustomersController extends Controller
      * Remove a list of Customers along side all their resources (ie. Estimates, Invoices, Payments and Addresses)
      *
      * @param  \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function delete(DeleteCustomersRequest $request)

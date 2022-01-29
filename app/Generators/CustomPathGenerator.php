@@ -32,11 +32,11 @@ class CustomPathGenerator implements PathGenerator
     {
         $folderName = null;
 
-        if ($media->model_type == Invoice::class) {
+        if ($media->model_type === Invoice::class) {
             $folderName = 'Invoices';
-        } elseif ($media->model_type == Estimate::class) {
+        } elseif ($media->model_type === Estimate::class) {
             $folderName = 'Estimates';
-        } elseif ($media->model_type == Payment::class) {
+        } elseif ($media->model_type === Payment::class) {
             $folderName = 'Payments';
         } else {
             $folderName = $media->getKey();

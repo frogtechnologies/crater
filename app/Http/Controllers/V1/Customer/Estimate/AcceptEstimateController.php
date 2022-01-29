@@ -12,12 +12,13 @@ use Illuminate\Support\Facades\Auth;
 class AcceptEstimateController extends Controller
 {
     /**
-    * Handle the incoming request.
-    *
-    * @param  \Illuminate\Http\Request  $request
-    * @param  Estimate $estimate
-    * @return \Illuminate\Http\Response
-    */
+     * Handle the incoming request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  Estimate $estimate
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function __invoke(Request $request, Company $company, $id)
     {
         $estimate = $company->estimates()

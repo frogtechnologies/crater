@@ -25,10 +25,11 @@ class EstimatesController extends Controller
             ->latest()
             ->paginateData($limit);
 
-        return (EstimateResource::collection($estimates))
+        return EstimateResource::collection($estimates)
             ->additional(['meta' => [
                 'estimate_total_count' => Estimate::whereCompany()->count(),
-            ]]);
+            ],
+            ]);
     }
 
     public function store(EstimatesRequest $request)

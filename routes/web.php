@@ -27,15 +27,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
 // Script Includes
 // ----------------------------------------------
-
 
 Route::get('/modules/styles/{style}', StyleController::class);
 
 Route::get('/modules/scripts/{script}', ScriptController::class);
-
 
 // Admin Auth
 // ----------------------------------------------
@@ -46,7 +43,6 @@ Route::get('auth/logout', function () {
     Auth::guard('web')->logout();
 });
 
-
 // Customer auth
 // ----------------------------------------------
 
@@ -55,7 +51,6 @@ Route::post('/{company:slug}/customer/login', CustomerLoginController::class);
 Route::get('/{company:slug}/customer/logout', function () {
     Auth::guard('customer')->logout();
 });
-
 
 Route::middleware('auth:sanctum')->prefix('reports')->group(function () {
 
@@ -79,7 +74,6 @@ Route::middleware('auth:sanctum')->prefix('reports')->group(function () {
     //----------------------------------
     Route::get('/profit-loss/{hash}', ProfitLossReportController::class);
 
-
     // download expense receipt
     // -------------------------------------------------
     Route::get('/expenses/{expense}/download-receipt', DownloadReceiptController::class);
@@ -101,8 +95,6 @@ Route::middleware('pdf-auth')->group(function () {
     Route::get('/payments/pdf/{payment:unique_hash}', PaymentPdfController::class);
 });
 
-
-
 // customer pdf endpoints for invoice, estimate and Payment
 // -------------------------------------------------
 
@@ -117,14 +109,12 @@ Route::prefix('/customer')->group(function () {
     Route::get('/payments/view/{email_log:token}', [CustomerPaymentPdfController::class, 'getPdf'])->name('payment');
 });
 
-
 // Setup for installation of app
 // ----------------------------------------------
 
 Route::get('/installation', function () {
     return view('app');
 })->name('install')->middleware('redirect-if-installed');
-
 
 // Move other http requests to the Vue App
 // -------------------------------------------------
@@ -136,7 +126,7 @@ Route::get('/admin/{vue?}', function () {
 Route::get('{company:slug}/customer/{vue?}', function (Company $company) {
     return view('app')->with([
         'customer_logo' => get_customer_logo($company->id),
-        'current_theme' => get_customer_portal_theme($company->id)
+        'current_theme' => get_customer_portal_theme($company->id),
     ]);
 })->where('vue', '[\/\w\.-]*')->name('customer.login')->middleware(['install']);
 
