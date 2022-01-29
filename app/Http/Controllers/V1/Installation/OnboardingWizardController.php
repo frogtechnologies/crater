@@ -18,7 +18,7 @@ class OnboardingWizardController extends Controller
      */
     public function getStep(Request $request)
     {
-        if (! Storage::disk(config('filesystems.default'))->exists('database_created')) {
+        if (! Storage::exists('database_created')) {
             return response()->json([
                 'profile_complete' => 0,
             ]);

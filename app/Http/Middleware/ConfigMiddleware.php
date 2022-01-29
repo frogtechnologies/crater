@@ -19,7 +19,7 @@ class ConfigMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if (Storage::disk(config('filesystems.default'))->exists('database_created')) {
+        if (Storage::exists('database_created')) {
             $setting = CompanySetting::getSetting('time_zone', $request->header('company'));
 
             $timezone = config('app.timezone');

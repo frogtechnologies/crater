@@ -16,7 +16,7 @@ use Illuminate\Support\Str;
  */
 function get_customer_portal_theme($company_id)
 {
-    if (Storage::disk(config('filesystems.default'))->exists('database_created')) {
+    if (Storage::exists('database_created')) {
         return CompanySetting::getSetting('customer_portal_theme', $company_id);
     }
 }
@@ -30,7 +30,7 @@ function get_customer_portal_theme($company_id)
  */
 function get_customer_logo($company_id)
 {
-    if (Storage::disk(config('filesystems.default'))->exists('database_created')) {
+    if (Storage::exists('database_created')) {
         return CompanySetting::getSetting('customer_portal_logo', $company_id);
     }
 }
@@ -42,7 +42,7 @@ function get_customer_logo($company_id)
  */
 function get_admin_portal_theme()
 {
-    if (Storage::disk(config('filesystems.default'))->exists('database_created')) {
+    if (Storage::exists('database_created')) {
         $setting = Setting::getSetting('admin_portal_theme');
 
         if ($setting) {
