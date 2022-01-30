@@ -1,8 +1,5 @@
 import '../sass/crater.scss'
 import 'v-tooltip/dist/v-tooltip.css'
-require('@inspector-apm/inspector-nodejs')({
-    ingestionKey: '307c84fad0cabcce68c0a62eefc053ddb575995f'
-})
 import '@/scripts/plugins/axios.js'
 import * as VueRouter from 'vue-router'
 import router from '@/scripts/router/index'
