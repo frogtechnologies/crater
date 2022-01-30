@@ -18,13 +18,13 @@ class CompanyMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Schema::hasTable('user_company')) {
-            $user = $request->user();
+        // if (Schema::hasTable('user_company')) {
+        //     $user = $request->user();
 
-            if (! $request->header('company') || (! $user->hasCompany($request->header('company')))) {
-                $request->headers->set('company', $user->companies()->first()->id);
-            }
-        }
+        //     if (! $request->header('company') || (! $user->hasCompany($request->header('company')))) {
+        //         $request->headers->set('company', $user->companies()->first()->id);
+        //     }
+        // }
 
         return $next($request);
     }
