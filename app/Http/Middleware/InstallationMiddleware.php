@@ -18,9 +18,9 @@ class InstallationMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if (! Storage::exists('database_created')) {
-            return redirect('/installation');
-        }
+        // if (! Storage::exists('database_created')) {
+        //     return redirect('/installation');
+        // }
 
         if (Storage::exists('database_created')) {
             if (Setting::getSetting('profile_complete') !== 'COMPLETED') {
