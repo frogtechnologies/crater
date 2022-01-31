@@ -106,3 +106,4 @@ See [LICENSE](LICENSE) for details.
 2. Run migrations & DB Seeder
 3. Storage put `database_created`
 4. Run `php artisan db:seed --class=DemoSeeder`
+5. Tinker and add setting `Setting::setSetting('profile_complete', 'COMPLETED')`
