@@ -17,6 +17,7 @@ class CloneInvoiceController extends Controller
      * Mail a specific invoice to the corresponding customer's email address.
      *
      * @param  \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function __invoke(Request $request, Invoice $invoice)
@@ -121,7 +122,7 @@ class CloneInvoiceController extends Controller
             foreach ($invoice->fields as $data) {
                 $customFields[] = [
                     'id' => $data->custom_field_id,
-                    'value' => $data->defaultAnswer
+                    'value' => $data->defaultAnswer,
                 ];
             }
 

@@ -17,13 +17,13 @@ class Version202 extends Listener
      */
     public function __construct()
     {
-        //
     }
 
     /**
      * Handle the event.
      *
      * @param  object  $event
+     *
      * @return void
      */
     public function handle(UpdateFinished $event)
@@ -33,6 +33,6 @@ class Version202 extends Listener
         }
 
         // Update Crater app version
-        Setting::setSetting('version', static::VERSION);
+        Setting::setSetting('version', self::VERSION);
     }
 }

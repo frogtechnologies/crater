@@ -51,7 +51,7 @@ class UserRequest extends FormRequest
             ],
         ];
 
-        if ($this->getMethod() == 'PUT') {
+        if ($this->getMethod() === 'PUT') {
             $rules['email'] = [
                 'required',
                 'email',

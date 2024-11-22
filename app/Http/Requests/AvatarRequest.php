@@ -29,12 +29,12 @@ class AvatarRequest extends FormRequest
                 'nullable',
                 'file',
                 'mimes:gif,jpg,png',
-                'max:20000'
+                'max:20000',
             ],
             'avatar' => [
                 'nullable',
-                new Base64Mime(['gif', 'jpg', 'png'])
-            ]
+                new Base64Mime(['gif', 'jpg', 'png']),
+            ],
         ];
     }
 }

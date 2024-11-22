@@ -11,17 +11,17 @@ class Transaction extends Model
 {
     use HasFactory;
 
-    protected $guarded = [
-        'id'
-    ];
-
-    protected $dates = [
-        'transaction_date'
-    ];
-
     public const PENDING = 'PENDING';
     public const FAILED = 'FAILED';
     public const SUCCESS = 'SUCCESS';
+
+    protected $guarded = [
+        'id',
+    ];
+
+    protected $dates = [
+        'transaction_date',
+    ];
 
     public function payments()
     {
@@ -66,7 +66,7 @@ class Transaction extends Model
 
         $expiryDate = $this->updated_at->addDays($linkexpiryDays);
 
-        if ($checkExpiryLinks == 'YES' && $this->status == self::SUCCESS && Carbon::now()->format('Y-m-d') > $expiryDate->format('Y-m-d')) {
+        if ($checkExpiryLinks === 'YES' && $this->status === self::SUCCESS && Carbon::now()->format('Y-m-d') > $expiryDate->format('Y-m-d')) {
             return true;
         }
 

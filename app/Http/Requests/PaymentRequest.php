@@ -34,14 +34,14 @@ class PaymentRequest extends FormRequest
                 'required',
             ],
             'exchange_rate' => [
-                'nullable'
+                'nullable',
             ],
             'amount' => [
                 'required',
             ],
             'payment_number' => [
                 'required',
-                Rule::unique('payments')->where('company_id', $this->header('company'))
+                Rule::unique('payments')->where('company_id', $this->header('company')),
             ],
             'invoice_id' => [
                 'nullable',
@@ -68,11 +68,11 @@ class PaymentRequest extends FormRequest
         $customer = Customer::find($this->customer_id);
 
         if ($customer && $companyCurrency) {
-            if ((string)$customer->currency_id !== $companyCurrency) {
+            if ((string) $customer->currency_id !== $companyCurrency) {
                 $rules['exchange_rate'] = [
                     'required',
                 ];
-            };
+            }
         }
 
         return $rules;
@@ -82,7 +82,7 @@ class PaymentRequest extends FormRequest
     {
         $company_currency = CompanySetting::getSetting('currency', $this->header('company'));
         $current_currency = $this->currency_id;
-        $exchange_rate = $company_currency != $current_currency ? $this->exchange_rate : 1;
+        $exchange_rate = $company_currency !== $current_currency ? $this->exchange_rate : 1;
         $currency = Customer::find($this->customer_id)->currency_id;
 
         return collect($this->validated())
@@ -91,7 +91,7 @@ class PaymentRequest extends FormRequest
                 'company_id' => $this->header('company'),
                 'exchange_rate' => $exchange_rate,
                 'base_amount' => $this->amount * $exchange_rate,
-                'currency_id' => $currency
+                'currency_id' => $currency,
             ])
             ->toArray();
     }

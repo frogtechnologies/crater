@@ -31,16 +31,18 @@ class PaymentsController extends Controller
             ->latest()
             ->paginateData($limit);
 
-        return (PaymentResource::collection($payments))
+        return PaymentResource::collection($payments)
             ->additional(['meta' => [
                 'payment_total_count' => Payment::whereCompany()->count(),
-            ]]);
+            ],
+            ]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(PaymentRequest $request)

@@ -25,16 +25,18 @@ class RecurringInvoiceController extends Controller
             ->applyFilters($request->all())
             ->paginateData($limit);
 
-        return (RecurringInvoiceResource::collection($recurringInvoices))
+        return RecurringInvoiceResource::collection($recurringInvoices)
             ->additional(['meta' => [
                 'recurring_invoice_total_count' => RecurringInvoice::whereCompany()->count(),
-            ]]);
+            ],
+            ]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(RecurringInvoiceRequest $request)
@@ -50,6 +52,7 @@ class RecurringInvoiceController extends Controller
      * Display the specified resource.
      *
      * @param  \Crater\Models\RecurringInvoice  $recurringInvoice
+     *
      * @return \Illuminate\Http\Response
      */
     public function show(RecurringInvoice $recurringInvoice)
@@ -64,6 +67,7 @@ class RecurringInvoiceController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Crater\Models\RecurringInvoice  $recurringInvoice
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(RecurringInvoiceRequest $request, RecurringInvoice $recurringInvoice)
@@ -79,6 +83,7 @@ class RecurringInvoiceController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \Crater\Models\RecurringInvoice  $recurringInvoice
+     *
      * @return \Illuminate\Http\Response
      */
     public function delete(Request $request)

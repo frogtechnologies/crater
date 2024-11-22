@@ -12,11 +12,13 @@ class RelationNotExist implements Rule
 
     /**
      * Create a new rule instance.
+     *
      * @param  string  $class
      * @param  string  $relation
+     *
      * @return void
      */
-    public function __construct(string $class = null, string $relation = null)
+    public function __construct(?string $class = null, ?string $relation = null)
     {
         $this->class = $class;
         $this->relation = $relation;
@@ -27,6 +29,7 @@ class RelationNotExist implements Rule
      *
      * @param  string  $attribute
      * @param  mixed  $value
+     *
      * @return bool
      */
     public function passes($attribute, $value)

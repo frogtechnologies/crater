@@ -10,7 +10,6 @@ use Illuminate\Http\JsonResponse;
 class ApiController extends Controller
 {
     /**
-     *
      * @return JsonResponse
      */
     public function respondSuccess(): JsonResponse

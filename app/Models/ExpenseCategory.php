@@ -75,7 +75,7 @@ class ExpenseCategory extends Model
 
     public function scopePaginateData($query, $limit)
     {
-        if ($limit == 'all') {
+        if ($limit === 'all') {
             return $query->get();
         }
 

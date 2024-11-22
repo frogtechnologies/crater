@@ -18,7 +18,7 @@ class InvoicePdfController extends Controller
         $invoice = Invoice::find($emailLog->mailable_id);
 
         if (! $emailLog->isExpired()) {
-            if ($invoice && ($invoice->status == Invoice::STATUS_SENT || $invoice->status == Invoice::STATUS_DRAFT)) {
+            if ($invoice && ($invoice->status === Invoice::STATUS_SENT || $invoice->status === Invoice::STATUS_DRAFT)) {
                 $invoice->status = Invoice::STATUS_VIEWED;
                 $invoice->viewed = true;
                 $invoice->save();
@@ -27,7 +27,7 @@ class InvoicePdfController extends Controller
                     $invoice->company_id
                 );
 
-                if ($notifyInvoiceViewed == 'YES') {
+                if ($notifyInvoiceViewed === 'YES') {
                     $data['invoice'] = Invoice::findOrFail($invoice->id)->toArray();
                     $data['user'] = Customer::find($invoice->customer_id)->toArray();
                     $notificationEmail = CompanySetting::getSetting(
@@ -45,7 +45,7 @@ class InvoicePdfController extends Controller
 
             return view('app')->with([
                 'customer_logo' => get_customer_logo($invoice->company_id),
-                'current_theme' => get_customer_portal_theme($invoice->company_id)
+                'current_theme' => get_customer_portal_theme($invoice->company_id),
             ]);
         }
 

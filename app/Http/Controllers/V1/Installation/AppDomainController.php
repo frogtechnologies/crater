@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Artisan;
 class AppDomainController extends Controller
 {
     /**
-     *
      * @param DomainEnvironmentRequest $request
      */
     public function __invoke(DomainEnvironmentRequest $request)

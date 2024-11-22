@@ -27,8 +27,8 @@ class CompanyLogoRequest extends FormRequest
         return [
             'company_logo' => [
                 'nullable',
-                new Base64Mime(['gif', 'jpg', 'png'])
-            ]
+                new Base64Mime(['gif', 'jpg', 'png']),
+            ],
         ];
     }
 }

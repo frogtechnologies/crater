@@ -30,6 +30,7 @@ class Module
      *
      * @param  string  $name
      * @param  string  $path
+     *
      * @return static
      */
     public static function script($name, $path)
@@ -44,6 +45,7 @@ class Module
      *
      * @param  string  $name
      * @param  string  $path
+     *
      * @return static
      */
     public static function style($name, $path)

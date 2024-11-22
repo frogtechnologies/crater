@@ -117,7 +117,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
 // ping
 //----------------------------------
 
@@ -127,17 +126,14 @@ Route::get('ping', function () {
     ]);
 })->name('ping');
 
-
 // Version 1 endpoints
 // --------------------------------------
 Route::prefix('/v1')->group(function () {
-
 
     // App version
     // ----------------------------------
 
     Route::get('/app/version', AppVersionController::class);
-
 
     // Authentication & Password Reset
     //----------------------------------
@@ -148,18 +144,16 @@ Route::prefix('/v1')->group(function () {
         Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 
         // Send reset password mail
-        Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->middleware("throttle:10,2");
+        Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->middleware('throttle:10,2');
 
         // handle reset password form process
         Route::post('reset/password', [ResetPasswordController::class, 'reset']);
     });
 
-
     // Countries
     //----------------------------------
 
     Route::get('/countries', CountriesController::class);
-
 
     // Onboarding
     //----------------------------------
@@ -184,7 +178,6 @@ Route::prefix('/v1')->group(function () {
         Route::post('/finish', FinishController::class);
     });
 
-
     Route::middleware(['auth:sanctum', 'company'])->group(function () {
         Route::middleware(['bouncer'])->group(function () {
 
@@ -202,18 +195,15 @@ Route::prefix('/v1')->group(function () {
                 Route::post('/bulk-update-exchange-rate', BulkExchangeRateController::class);
             });
 
-
             // Dashboard
             //----------------------------------
 
             Route::get('/dashboard', DashboardController::class);
 
-
             // Auth check
             //----------------------------------
 
             Route::get('/auth/check', [AuthController::class, 'check']);
-
 
             // Search users
             //----------------------------------
@@ -221,7 +211,6 @@ Route::prefix('/v1')->group(function () {
             Route::get('/search', SearchController::class);
 
             Route::get('/search/user', SearchUsersController::class);
-
 
             // MISC
             //----------------------------------
@@ -240,7 +229,6 @@ Route::prefix('/v1')->group(function () {
 
             Route::get('/current-company', AdminCompanyController::class);
 
-
             // Customers
             //----------------------------------
 
@@ -250,7 +238,6 @@ Route::prefix('/v1')->group(function () {
 
             Route::resource('customers', CustomersController::class);
 
-
             // Items
             //----------------------------------
 
@@ -259,7 +246,6 @@ Route::prefix('/v1')->group(function () {
             Route::resource('items', ItemsController::class);
 
             Route::resource('units', UnitsController::class);
-
 
             // Invoices
             //-------------------------------------------------
@@ -278,7 +264,6 @@ Route::prefix('/v1')->group(function () {
 
             Route::apiResource('invoices', InvoicesController::class);
 
-
             // Recurring Invoice
             //-------------------------------------------------
 
@@ -287,7 +272,6 @@ Route::prefix('/v1')->group(function () {
             Route::post('/recurring-invoices/delete', [RecurringInvoiceController::class, 'delete']);
 
             Route::apiResource('recurring-invoices', RecurringInvoiceController::class);
-
 
             // Estimates
             //-------------------------------------------------
@@ -306,7 +290,6 @@ Route::prefix('/v1')->group(function () {
 
             Route::apiResource('estimates', EstimatesController::class);
 
-
             // Expenses
             //----------------------------------
 
@@ -319,7 +302,6 @@ Route::prefix('/v1')->group(function () {
             Route::apiResource('expenses', ExpensesController::class);
 
             Route::apiResource('categories', ExpenseCategoriesController::class);
-
 
             // Payments
             //----------------------------------
@@ -334,12 +316,10 @@ Route::prefix('/v1')->group(function () {
 
             Route::apiResource('payment-methods', PaymentMethodsController::class);
 
-
             // Custom fields
             //----------------------------------
 
             Route::resource('custom-fields', CustomFieldsController::class);
-
 
             // Backup & Disk
             //----------------------------------
@@ -351,7 +331,6 @@ Route::prefix('/v1')->group(function () {
             Route::get('download-backup', DownloadBackupController::class);
 
             Route::get('/disk/drivers', [DiskController::class, 'getDiskDrivers']);
-
 
             // Exchange Rate
             //----------------------------------
@@ -366,10 +345,8 @@ Route::prefix('/v1')->group(function () {
 
             Route::apiResource('exchange-rate-providers', ExchangeRateProviderController::class);
 
-
             // Settings
             //----------------------------------
-
 
             Route::get('/me', [CompanyController::class, 'getUser']);
 
@@ -380,7 +357,6 @@ Route::prefix('/v1')->group(function () {
             Route::put('/me/settings', UpdateUserSettingsController::class);
 
             Route::post('/me/upload-avatar', [CompanyController::class, 'uploadAvatar']);
-
 
             Route::put('/company', [CompanyController::class, 'updateCompany']);
 
@@ -393,7 +369,6 @@ Route::prefix('/v1')->group(function () {
             Route::get('/settings', GetSettingsController::class);
 
             Route::post('/settings', UpdateSettingsController::class);
-
 
             // Mails
             //----------------------------------
@@ -410,12 +385,10 @@ Route::prefix('/v1')->group(function () {
 
             Route::apiResource('notes', NotesController::class);
 
-
             // Tax Types
             //----------------------------------
 
             Route::apiResource('tax-types', TaxTypesController::class);
-
 
             // Roles
             //----------------------------------
@@ -424,7 +397,6 @@ Route::prefix('/v1')->group(function () {
 
             Route::apiResource('roles', RolesController::class);
         });
-
 
         // Self Update
         //----------------------------------
@@ -454,14 +426,12 @@ Route::prefix('/v1')->group(function () {
 
         Route::get('companies', [CompaniesController::class, 'getUserCompanies']);
 
-
         // Users
         //----------------------------------
 
         Route::post('/users/delete', [UsersController::class, 'delete']);
 
         Route::apiResource('/users', UsersController::class);
-
 
         // Modules
         //----------------------------------
@@ -489,9 +459,7 @@ Route::prefix('/v1')->group(function () {
         });
     });
 
-
     Route::prefix('/{company:slug}/customer')->group(function () {
-
 
         // Authentication & Password Reset
         //----------------------------------
@@ -504,7 +472,6 @@ Route::prefix('/v1')->group(function () {
             // handle reset password form process
             Route::post('reset/password', [AuthResetPasswordController::class, 'reset'])->name('customer.password.reset');
         });
-
 
         // Invoices, Estimates, Payments and Expenses endpoints
         //-------------------------------------------------------

@@ -18,6 +18,7 @@ class CustomerStatsController extends Controller
      * Handle the incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function __invoke(Request $request, Customer $customer)
@@ -85,7 +86,7 @@ class CustomerStatsController extends Controller
             );
             array_push(
                 $netProfits,
-                ($receiptTotals[$i] - $expenseTotals[$i])
+                $receiptTotals[$i] - $expenseTotals[$i]
             );
             $i++;
             array_push($months, $start->format('M'));
@@ -136,7 +137,8 @@ class CustomerStatsController extends Controller
 
         return (new CustomerResource($customer))
             ->additional(['meta' => [
-                'chartData' => $chartData
-            ]]);
+                'chartData' => $chartData,
+            ],
+            ]);
     }
 }

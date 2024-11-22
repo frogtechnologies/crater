@@ -12,6 +12,7 @@ class EstimateTemplatesController extends Controller
      * Handle the incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function __invoke(Request $request)
@@ -21,7 +22,7 @@ class EstimateTemplatesController extends Controller
         $estimateTemplates = Estimate::estimateTemplates();
 
         return response()->json([
-            'estimateTemplates' => $estimateTemplates
+            'estimateTemplates' => $estimateTemplates,
         ]);
     }
 }

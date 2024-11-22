@@ -12,7 +12,7 @@ class EstimateItem extends Model
     use HasCustomFieldsTrait;
 
     protected $guarded = [
-        'id'
+        'id',
     ];
 
     protected $casts = [

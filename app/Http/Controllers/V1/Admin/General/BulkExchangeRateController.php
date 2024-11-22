@@ -16,13 +16,14 @@ class BulkExchangeRateController extends Controller
      * Handle the incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function __invoke(BulkExchangeRateRequest $request)
     {
         $bulkExchangeRate = CompanySetting::getSetting('bulk_exchange_rate_configured', $request->header('company'));
 
-        if ($bulkExchangeRate == 'NO') {
+        if ($bulkExchangeRate === 'NO') {
             if ($request->currencies) {
                 foreach ($request->currencies as $currency) {
                     $currency['exchange_rate'] = $currency['exchange_rate'] ?? 1;
@@ -37,7 +38,7 @@ class BulkExchangeRateController extends Controller
                                 'base_sub_total' => $invoice->sub_total * $currency['exchange_rate'],
                                 'base_total' => $invoice->total * $currency['exchange_rate'],
                                 'base_tax' => $invoice->tax * $currency['exchange_rate'],
-                                'base_due_amount' => $invoice->due_amount * $currency['exchange_rate']
+                                'base_due_amount' => $invoice->due_amount * $currency['exchange_rate'],
                             ]);
 
                             $this->items($invoice);
@@ -53,7 +54,7 @@ class BulkExchangeRateController extends Controller
                                 'base_discount_val' => $estimate->sub_total * $currency['exchange_rate'],
                                 'base_sub_total' => $estimate->sub_total * $currency['exchange_rate'],
                                 'base_total' => $estimate->total * $currency['exchange_rate'],
-                                'base_tax' => $estimate->tax * $currency['exchange_rate']
+                                'base_tax' => $estimate->tax * $currency['exchange_rate'],
                             ]);
 
                             $this->items($estimate);
@@ -64,7 +65,7 @@ class BulkExchangeRateController extends Controller
 
                     if ($taxes) {
                         foreach ($taxes as $tax) {
-                            $tax->base_amount = $tax->base_amount * $currency['exchange_rate'];
+                            $tax->base_amount *= $currency['exchange_rate'];
                             $tax->save();
                         }
                     }
@@ -82,18 +83,18 @@ class BulkExchangeRateController extends Controller
             }
 
             $settings = [
-                'bulk_exchange_rate_configured' => 'YES'
+                'bulk_exchange_rate_configured' => 'YES',
             ];
 
             CompanySetting::setSettings($settings, $request->header('company'));
 
             return response()->json([
-                'success' => true
+                'success' => true,
             ]);
         }
 
         return response()->json([
-            'error' => false
+            'error' => false,
         ]);
     }
 
@@ -105,7 +106,7 @@ class BulkExchangeRateController extends Controller
                 'base_discount_val' => $item->discount_val * $model->exchange_rate,
                 'base_price' => $item->price * $model->exchange_rate,
                 'base_tax' => $item->tax * $model->exchange_rate,
-                'base_total' => $item->total * $model->exchange_rate
+                'base_total' => $item->total * $model->exchange_rate,
             ]);
 
             $this->taxes($item);

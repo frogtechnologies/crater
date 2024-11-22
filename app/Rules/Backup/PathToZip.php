@@ -14,7 +14,6 @@ class PathToZip implements Rule
      */
     public function __construct()
     {
-        //
     }
 
     /**
@@ -22,6 +21,7 @@ class PathToZip implements Rule
      *
      * @param  string  $attribute
      * @param  mixed  $value
+     *
      * @return bool
      */
     public function passes($attribute, $value)

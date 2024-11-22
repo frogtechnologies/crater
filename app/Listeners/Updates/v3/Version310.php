@@ -16,6 +16,7 @@ class Version310 extends Listener
      * Handle the event.
      *
      * @param UpdateFinished $event
+     *
      * @return void
      */
     public function handle(UpdateFinished $event)
@@ -42,6 +43,6 @@ class Version310 extends Listener
         Artisan::call('migrate', ['--force' => true]);
 
         // Update Crater app version
-        Setting::setSetting('version', static::VERSION);
+        Setting::setSetting('version', self::VERSION);
     }
 }

@@ -24,6 +24,6 @@ class DemoSeeder extends Seeder
 
         Setting::setSetting('profile_complete', 'COMPLETED');
 
-        \Storage::disk('local')->put('database_created', 'database_created');
+        \Storage::put('database_created', 'database_created');
     }
 }

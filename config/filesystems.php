@@ -87,6 +87,7 @@ return [
             'token' => env('DROPBOX_TOKEN'),
             'key' => env('DROPBOX_KEY'),
             'secret' => env('DROPBOX_SECRET'),
+            'authorization_token' => env('DROPBOX_TOKEN'),
             'app' => env('DROPBOX_APP'),
             'root' => env('DROPBOX_ROOT'),
         ],
@@ -94,6 +95,38 @@ return [
         'views' => [
             'driver' => 'local',
             'root' => resource_path('views'),
+        ],
+
+        'ftp' => [
+            'driver' => 'ftp',
+            'host' => env('FTP_HOST'),
+            'username' => env('FTP_USERNAME'),
+            'password' => env('FTP_PASSWORD'),
+
+            // Optional FTP Settings...
+            'port' => env('FTP_PORT', 21),
+            'root' => env('FTP_ROOT'),
+            // 'passive' => true,
+            // 'ssl' => true,
+            // 'timeout' => 30,
+        ],
+
+        'sftp' => [
+            'driver' => 'sftp',
+            'host' => env('SFTP_HOST'),
+
+            // Settings for basic authentication...
+            'username' => env('SFTP_USERNAME'),
+            'password' => env('SFTP_PASSWORD'),
+
+            // Settings for SSH key based authentication with encryption password...
+            'privateKey' => env('SFTP_PRIVATE_KEY'),
+            'password' => env('SFTP_PASSWORD'),
+
+            // Optional SFTP Settings...
+            'port' => env('SFTP_PORT', 22),
+            // 'root' => env('SFTP_ROOT'),
+            // 'timeout' => 30,
         ],
 
     ],

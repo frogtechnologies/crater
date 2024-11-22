@@ -36,6 +36,7 @@ class ResetPasswordController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  string  $response
+     *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
      */
     protected function sendResetResponse(Request $request, $response)
@@ -50,6 +51,7 @@ class ResetPasswordController extends Controller
      *
      * @param  \Illuminate\Contracts\Auth\CanResetPassword  $user
      * @param  string  $password
+     *
      * @return void
      */
     protected function resetPassword($user, $password)
@@ -68,6 +70,7 @@ class ResetPasswordController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  string  $response
+     *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
      */
     protected function sendResetFailedResponse(Request $request, $response)

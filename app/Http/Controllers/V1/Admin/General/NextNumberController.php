@@ -15,6 +15,7 @@ class NextNumberController extends Controller
      * Handle the incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function __invoke(Request $request, Invoice $invoice, Estimate $estimate, Payment $payment)
@@ -54,7 +55,7 @@ class NextNumberController extends Controller
         } catch (\Exception $exception) {
             return response()->json([
                 'success' => false,
-                'message' => $exception->getMessage()
+                'message' => $exception->getMessage(),
             ]);
         }
 

@@ -24,7 +24,7 @@ class EmailLog extends Model
 
         $expiryDate = $this->created_at->addDays($linkexpiryDays);
 
-        if ($checkExpiryLinks == 'YES' && Carbon::now()->format('Y-m-d') > $expiryDate->format('Y-m-d')) {
+        if ($checkExpiryLinks === 'YES' && Carbon::now()->format('Y-m-d') > $expiryDate->format('Y-m-d')) {
             return true;
         }
 

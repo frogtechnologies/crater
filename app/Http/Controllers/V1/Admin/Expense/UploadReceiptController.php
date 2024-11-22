@@ -13,6 +13,7 @@ class UploadReceiptController extends Controller
      *
      * @param  \Crater\Http\Requests\ExpenseRequest $request
      * @param  Expense $expense
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function __invoke(ExpenseRequest $request, Expense $expense)

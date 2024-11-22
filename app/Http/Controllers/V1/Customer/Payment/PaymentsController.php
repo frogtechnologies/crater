@@ -33,16 +33,18 @@ class PaymentsController extends Controller
             ->latest()
             ->paginateData($limit);
 
-        return (PaymentResource::collection($payments))
+        return PaymentResource::collection($payments)
             ->additional(['meta' => [
                 'paymentTotalCount' => Payment::whereCustomer(Auth::guard('customer')->id())->count(),
-            ]]);
+            ],
+            ]);
     }
 
     /**
      * Display the specified resource.
      *
      * @param  \Crater\Models\Payment  $payment
+     *
      * @return \Illuminate\Http\Response
      */
     public function show(Company $company, $id)

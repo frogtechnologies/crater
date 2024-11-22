@@ -36,7 +36,7 @@ class Estimate extends Model implements HasMedia
         'updated_at',
         'deleted_at',
         'estimate_date',
-        'expiry_date'
+        'expiry_date',
     ];
 
     protected $appends = [
@@ -53,7 +53,7 @@ class Estimate extends Model implements HasMedia
         'sub_total' => 'integer',
         'discount' => 'float',
         'discount_val' => 'integer',
-        'exchange_rate' => 'float'
+        'exchange_rate' => 'float',
     ];
 
     public function getEstimatePdfUrlAttribute()
@@ -198,7 +198,7 @@ class Estimate extends Model implements HasMedia
 
     public function scopePaginateData($query, $limit)
     {
-        if ($limit == 'all') {
+        if ($limit === 'all') {
             return $query->get();
         }
 
@@ -227,7 +227,7 @@ class Estimate extends Model implements HasMedia
 
         $company_currency = CompanySetting::getSetting('currency', $request->header('company'));
 
-        if ((string)$data['currency_id'] !== $company_currency) {
+        if ((string) $data['currency_id'] !== $company_currency) {
             ExchangeRateLog::addExchangeRateLog($estimate);
         }
 
@@ -263,7 +263,7 @@ class Estimate extends Model implements HasMedia
 
         $company_currency = CompanySetting::getSetting('currency', $request->header('company'));
 
-        if ((string)$data['currency_id'] !== $company_currency) {
+        if ((string) $data['currency_id'] !== $company_currency) {
             ExchangeRateLog::addExchangeRateLog($this);
         }
 
@@ -289,12 +289,12 @@ class Estimate extends Model implements HasMedia
         }
 
         return Estimate::with([
-                'items.taxes',
-                'items.fields',
-                'items.fields.customField',
-                'customer',
-                'taxes'
-            ])
+            'items.taxes',
+            'items.fields',
+            'items.fields.customField',
+            'customer',
+            'taxes',
+        ])
             ->find($this->id);
     }
 
@@ -314,7 +314,7 @@ class Estimate extends Model implements HasMedia
 
             if (array_key_exists('taxes', $estimateItem) && $estimateItem['taxes']) {
                 foreach ($estimateItem['taxes'] as $tax) {
-                    if (gettype($tax['amount']) !== "NULL") {
+                    if (gettype($tax['amount']) !== 'NULL') {
                         $tax['company_id'] = $request->header('company');
                         $item->taxes()->create($tax);
                     }
@@ -332,7 +332,7 @@ class Estimate extends Model implements HasMedia
         $estimateTaxes = $request->taxes;
 
         foreach ($estimateTaxes as $tax) {
-            if (gettype($tax['amount']) !== "NULL") {
+            if (gettype($tax['amount']) !== 'NULL') {
                 $tax['company_id'] = $request->header('company');
                 $tax['exchange_rate'] = $exchange_rate;
                 $tax['base_amount'] = $tax['amount'] * $exchange_rate;
@@ -349,7 +349,7 @@ class Estimate extends Model implements HasMedia
         $data['user'] = $this->customer->toArray();
         $data['company'] = $this->company->toArray();
         $data['body'] = $this->getEmailBody($data['body']);
-        $data['attach']['data'] = ($this->getEmailAttachmentSetting()) ? $this->getPDFData() : null;
+        $data['attach']['data'] = $this->getEmailAttachmentSetting() ? $this->getPDFData() : null;
 
         return $data;
     }
@@ -358,7 +358,7 @@ class Estimate extends Model implements HasMedia
     {
         $data = $this->sendEstimateData($data);
 
-        if ($this->status == Estimate::STATUS_DRAFT) {
+        if ($this->status === Estimate::STATUS_DRAFT) {
             $this->status = Estimate::STATUS_SENT;
             $this->save();
         }
@@ -379,7 +379,7 @@ class Estimate extends Model implements HasMedia
             foreach ($this->items as $item) {
                 foreach ($item->taxes as $tax) {
                     $found = $taxes->filter(function ($item) use ($tax) {
-                        return $item->tax_type_id == $tax->tax_type_id;
+                        return $item->tax_type_id === $tax->tax_type_id;
                     })->first();
 
                     if ($found) {
@@ -457,7 +457,7 @@ class Estimate extends Model implements HasMedia
     {
         $estimateAsAttachment = CompanySetting::getSetting('estimate_email_attachment', $this->company_id);
 
-        if ($estimateAsAttachment == 'NO') {
+        if ($estimateAsAttachment === 'NO') {
             return false;
         }
 
@@ -508,7 +508,7 @@ class Estimate extends Model implements HasMedia
             $name[] = $template['name'];
         }
 
-        if (in_array($templateName, $name) == false) {
+        if (in_array($templateName, $name) === false) {
             $templateName = 'invoice1';
         }
 

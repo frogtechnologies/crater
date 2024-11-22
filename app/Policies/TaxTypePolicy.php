@@ -15,6 +15,7 @@ class TaxTypePolicy
      * Determine whether the user can view any models.
      *
      * @param  \Crater\Models\User  $user
+     *
      * @return mixed
      */
     public function viewAny(User $user)
@@ -31,6 +32,7 @@ class TaxTypePolicy
      *
      * @param  \Crater\Models\User  $user
      * @param  \Crater\Models\TaxType  $taxType
+     *
      * @return mixed
      */
     public function view(User $user, TaxType $taxType)
@@ -46,6 +48,7 @@ class TaxTypePolicy
      * Determine whether the user can create models.
      *
      * @param  \Crater\Models\User  $user
+     *
      * @return mixed
      */
     public function create(User $user)
@@ -62,6 +65,7 @@ class TaxTypePolicy
      *
      * @param  \Crater\Models\User  $user
      * @param  \Crater\Models\TaxType  $taxType
+     *
      * @return mixed
      */
     public function update(User $user, TaxType $taxType)
@@ -78,6 +82,7 @@ class TaxTypePolicy
      *
      * @param  \Crater\Models\User  $user
      * @param  \Crater\Models\TaxType  $taxType
+     *
      * @return mixed
      */
     public function delete(User $user, TaxType $taxType)
@@ -94,6 +99,7 @@ class TaxTypePolicy
      *
      * @param  \Crater\Models\User  $user
      * @param  \Crater\Models\TaxType  $taxType
+     *
      * @return mixed
      */
     public function restore(User $user, TaxType $taxType)
@@ -110,6 +116,7 @@ class TaxTypePolicy
      *
      * @param  \Crater\Models\User  $user
      * @param  \Crater\Models\TaxType  $taxType
+     *
      * @return mixed
      */
     public function forceDelete(User $user, TaxType $taxType)

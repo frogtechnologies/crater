@@ -33,6 +33,7 @@ class CustomFieldsController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\CustomFieldRequest  $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(CustomFieldRequest $request)
@@ -48,6 +49,7 @@ class CustomFieldsController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function show(CustomField $customField)
@@ -62,6 +64,7 @@ class CustomFieldsController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(CustomFieldRequest $request, CustomField $customField)
@@ -77,6 +80,7 @@ class CustomFieldsController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy(CustomField $customField)

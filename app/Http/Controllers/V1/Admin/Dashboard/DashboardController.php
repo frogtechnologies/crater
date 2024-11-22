@@ -19,6 +19,7 @@ class DashboardController extends Controller
      * Handle the incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function __invoke(Request $request)
@@ -64,8 +65,8 @@ class DashboardController extends Controller
                     'invoice_date',
                     [$start->format('Y-m-d'), $end->format('Y-m-d')]
                 )
-                ->whereCompany()
-                ->sum('base_total')
+                    ->whereCompany()
+                    ->sum('base_total')
             );
             array_push(
                 $expense_totals,
@@ -73,8 +74,8 @@ class DashboardController extends Controller
                     'expense_date',
                     [$start->format('Y-m-d'), $end->format('Y-m-d')]
                 )
-                ->whereCompany()
-                ->sum('base_amount')
+                    ->whereCompany()
+                    ->sum('base_amount')
             );
             array_push(
                 $receipt_totals,
@@ -82,12 +83,12 @@ class DashboardController extends Controller
                     'payment_date',
                     [$start->format('Y-m-d'), $end->format('Y-m-d')]
                 )
-                ->whereCompany()
-                ->sum('base_amount')
+                    ->whereCompany()
+                    ->sum('base_amount')
             );
             array_push(
                 $net_income_totals,
-                ($receipt_totals[$i] - $expense_totals[$i])
+                $receipt_totals[$i] - $expense_totals[$i]
             );
             $i++;
             array_push($months, $start->format('M'));
@@ -120,7 +121,7 @@ class DashboardController extends Controller
             ->whereCompany()
             ->sum('base_amount');
 
-        $total_net_income = (int)$total_receipts - (int)$total_expenses;
+        $total_net_income = (int) $total_receipts - (int) $total_expenses;
 
         $chart_data = [
             'months' => $months,

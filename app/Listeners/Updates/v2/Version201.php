@@ -18,13 +18,13 @@ class Version201 extends Listener
      */
     public function __construct()
     {
-        //
     }
 
     /**
      * Handle the event.
      *
      * @param  object  $event
+     *
      * @return void
      */
     public function handle(UpdateFinished $event)
@@ -40,7 +40,7 @@ class Version201 extends Listener
         $this->changeMigrations();
 
         // Update Crater app version
-        Setting::setSetting('version', static::VERSION);
+        Setting::setSetting('version', self::VERSION);
     }
 
     private function removeLanguageFiles()

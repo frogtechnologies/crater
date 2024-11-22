@@ -33,7 +33,7 @@ class CustomerRequest extends FormRequest
             'email' => [
                 'email',
                 'nullable',
-                Rule::unique('customers')->where('company_id', $this->header('company'))
+                Rule::unique('customers')->where('company_id', $this->header('company')),
             ],
             'password' => [
                 'nullable',
@@ -55,7 +55,7 @@ class CustomerRequest extends FormRequest
             ],
             'enable_portal' => [
 
-                'boolean'
+                'boolean',
             ],
             'currency_id' => [
                 'nullable',
@@ -113,16 +113,16 @@ class CustomerRequest extends FormRequest
             ],
             'shipping.fax' => [
                 'nullable',
-            ]
+            ],
         ];
 
-        if ($this->isMethod('PUT') && $this->email != null) {
+        if ($this->isMethod('PUT') && $this->email !== null) {
             $rules['email'] = [
                 'email',
                 'nullable',
                 Rule::unique('customers')->where('company_id', $this->header('company'))->ignore($this->route('customer')->id),
             ];
-        };
+        }
 
         return $rules;
     }
@@ -156,7 +156,7 @@ class CustomerRequest extends FormRequest
     {
         return collect($this->shipping)
             ->merge([
-                'type' => Address::SHIPPING_TYPE
+                'type' => Address::SHIPPING_TYPE,
             ])
             ->toArray();
     }
@@ -165,17 +165,15 @@ class CustomerRequest extends FormRequest
     {
         return collect($this->billing)
             ->merge([
-                'type' => Address::BILLING_TYPE
+                'type' => Address::BILLING_TYPE,
             ])
             ->toArray();
     }
 
     public function hasAddress(array $address)
     {
-        $data = Arr::where($address, function ($value, $key) {
+        return Arr::where($address, function ($value, $key) {
             return isset($value);
         });
-
-        return $data;
     }
 }

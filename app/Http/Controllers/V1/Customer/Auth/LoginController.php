@@ -16,6 +16,7 @@ class LoginController extends Controller
      * Handle the incoming request.
      *
      * @param  \Crater\Http\Requests\Customer\CustomerLoginRequest  $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function __invoke(CustomerLoginRequest $request, Company $company)
@@ -39,7 +40,7 @@ class LoginController extends Controller
         Auth::guard('customer')->login($user);
 
         return response()->json([
-            'success' => true
+            'success' => true,
         ]);
     }
 }

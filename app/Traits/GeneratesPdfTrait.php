@@ -20,7 +20,7 @@ trait GeneratesPdfTrait
             ]);
         }
 
-        $locale = CompanySetting::getSetting('language',  $this->company_id);
+        $locale = CompanySetting::getSetting('language', $this->company_id);
 
         App::setLocale($locale);
 
@@ -48,7 +48,7 @@ trait GeneratesPdfTrait
 
                 $path = null;
 
-                if ($file_disk->driver == 'local') {
+                if ($file_disk->driver === 'local') {
                     $path = $media->getPath();
                 } else {
                     $path = $media->getTemporaryUrl(Carbon::now()->addMinutes(5));
@@ -68,19 +68,19 @@ trait GeneratesPdfTrait
 
     public function generatePDF($collection_name, $file_name, $deleteExistingFile = false)
     {
-        $save_pdf_to_disk = CompanySetting::getSetting('save_pdf_to_disk',  $this->company_id);
+        $save_pdf_to_disk = CompanySetting::getSetting('save_pdf_to_disk', $this->company_id);
 
-        if ($save_pdf_to_disk == 'NO') {
+        if ($save_pdf_to_disk === 'NO') {
             return 0;
         }
 
-        $locale = CompanySetting::getSetting('language',  $this->company_id);
+        $locale = CompanySetting::getSetting('language', $this->company_id);
 
         App::setLocale($locale);
 
         $pdf = $this->getPDFData();
 
-        \Storage::disk('local')->put('temp/'.$collection_name.'/'.$this->id.'/temp.pdf', $pdf->output());
+        \Storage::put('temp/'.$collection_name.'/'.$this->id.'/temp.pdf', $pdf->output());
 
         if ($deleteExistingFile) {
             $this->clearMediaCollection($this->id);
@@ -92,7 +92,7 @@ trait GeneratesPdfTrait
             $file_disk->setConfig();
         }
 
-        $media = \Storage::disk('local')->path('temp/'.$collection_name.'/'.$this->id.'/temp.pdf');
+        $media = \Storage::path('temp/'.$collection_name.'/'.$this->id.'/temp.pdf');
 
         try {
             $this->addMedia($media)
@@ -100,7 +100,7 @@ trait GeneratesPdfTrait
                 ->usingFileName($file_name.'.pdf')
                 ->toMediaCollection($collection_name, config('filesystems.default'));
 
-            \Storage::disk('local')->deleteDirectory('temp/'.$collection_name.'/'.$this->id);
+            \Storage::deleteDirectory('temp/'.$collection_name.'/'.$this->id);
 
             return true;
         } catch (\Exception $e) {
@@ -175,10 +175,8 @@ trait GeneratesPdfTrait
 
         $str = preg_replace("/<[^\/>]*>([\s]?)*<\/[^>]*>/", '', $str);
 
-        $str = str_replace("<p>", "", $str);
+        $str = str_replace('<p>', '', $str);
 
-        $str = str_replace("</p>", "</br>", $str);
-
-        return $str;
+        return str_replace('</p>', '</br>', $str);
     }
 }

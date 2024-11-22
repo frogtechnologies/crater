@@ -60,6 +60,7 @@ class BackupsController extends ApiController
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     *
      * @return JsonResponse
      */
     public function store(Request $request)
@@ -75,6 +76,7 @@ class BackupsController extends ApiController
      * Remove the specified resource from storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     *
      * @return JsonResponse
      */
     public function destroy($disk, Request $request)

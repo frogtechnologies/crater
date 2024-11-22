@@ -12,6 +12,7 @@ class SendPaymentController extends Controller
      * Handle the incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function __invoke(SendPaymentRequest $request, Payment $payment)

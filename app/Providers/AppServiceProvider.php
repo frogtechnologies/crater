@@ -4,6 +4,7 @@ namespace Crater\Providers;
 
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -15,10 +16,15 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        URL::forceScheme('https');
         Paginator::useBootstrapThree();
         $this->loadJsonTranslationsFrom(resource_path('scripts/locales'));
 
-        if (\Storage::disk('local')->has('database_created') && Schema::hasTable('abilities')) {
+        // if (Storage::exists('database_created') && Schema::hasTable('abilities')) {
+        //     $this->addMenus();
+        // }
+
+        if (Schema::hasTable('abilities')) {
             $this->addMenus();
         }
     }
@@ -30,7 +36,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
     }
 
     public function addMenus()

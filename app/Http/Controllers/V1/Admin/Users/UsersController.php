@@ -15,6 +15,7 @@ class UsersController extends Controller
      * Display a listing of the resource.
      *
      * @param  \Illuminate\Http\Request  $request
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function index(Request $request)
@@ -33,13 +34,15 @@ class UsersController extends Controller
         return UserResource::collection($users)
             ->additional(['meta' => [
                 'user_total_count' => User::count(),
-            ]]);
+            ],
+            ]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\UserRequest  $request
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function store(UserRequest $request)
@@ -55,6 +58,7 @@ class UsersController extends Controller
      * Display the specified resource.
      *
      * @param  \Crater\Models\User  $user
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function show(User $user)
@@ -69,6 +73,7 @@ class UsersController extends Controller
      *
      * @param  \Illuminate\Http\UserRequest  $request
      * @param  \Crater\Models\User  $user
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function update(UserRequest $request, User $user)
@@ -84,6 +89,7 @@ class UsersController extends Controller
      * Display a listing of the resource.
      *
      * @param  \Illuminate\Http\Request  $request
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function delete(DeleteUserRequest $request)

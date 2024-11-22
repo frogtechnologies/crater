@@ -16,6 +16,7 @@ class CompanyController extends Controller
 {
     /**
      * Retrive the Admin account.
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function getUser(Request $request)
@@ -28,6 +29,7 @@ class CompanyController extends Controller
      * Includes name, email and (or) password
      *
      * @param  \Crater\Http\Requests\ProfileRequest $request
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function updateProfile(ProfileRequest $request)
@@ -41,7 +43,9 @@ class CompanyController extends Controller
 
     /**
      * Update Admin Company Details
+     *
      * @param \Crater\Http\Requests\CompanyRequest $request
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function updateCompany(CompanyRequest $request)
@@ -61,6 +65,7 @@ class CompanyController extends Controller
      * Upload the company logo to storage.
      *
      * @param  \Crater\Http\Requests\CompanyLogoRequest $request
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function uploadCompanyLogo(CompanyLogoRequest $request)
@@ -92,6 +97,7 @@ class CompanyController extends Controller
      * Upload the Admin Avatar to public storage.
      *
      * @param  \Crater\Http\Requests\AvatarRequest $request
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function uploadAvatar(AvatarRequest $request)

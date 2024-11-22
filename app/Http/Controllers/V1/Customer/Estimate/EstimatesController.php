@@ -21,11 +21,11 @@ class EstimatesController extends Controller
         $limit = $request->has('limit') ? $request->limit : 10;
 
         $estimates = Estimate::with([
-                'items',
-                'customer',
-                'taxes',
-                'creator',
-            ])
+            'items',
+            'customer',
+            'taxes',
+            'creator',
+        ])
             ->where('status', '<>', 'DRAFT')
             ->whereCustomer(Auth::guard('customer')->id())
             ->applyFilters($request->only([
@@ -39,16 +39,18 @@ class EstimatesController extends Controller
             ->latest()
             ->paginateData($limit);
 
-        return (EstimateResource::collection($estimates))
+        return EstimateResource::collection($estimates)
             ->additional(['meta' => [
                 'estimateTotalCount' => Estimate::where('status', '<>', 'DRAFT')->whereCustomer(Auth::guard('customer')->id())->count(),
-            ]]);
+            ],
+            ]);
     }
 
     /**
      * Display the specified resource.
      *
      * @param  Estimate $estimate
+     *
      * @return \Illuminate\Http\Response
      */
     public function show(Company $company, $id)

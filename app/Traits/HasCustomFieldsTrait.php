@@ -11,20 +11,11 @@ trait HasCustomFieldsTrait
         return $this->morphMany('Crater\Models\CustomFieldValue', 'custom_field_valuable');
     }
 
-    protected static function booted()
-    {
-        static::deleting(function ($data) {
-            if ($data->fields()->exists()) {
-                $data->fields()->delete();
-            }
-        });
-    }
-
     public function addCustomFields($customFields)
     {
         foreach ($customFields as $field) {
             if (! is_array($field)) {
-                $field = (array)$field;
+                $field = (array) $field;
             }
             $customField = CustomField::find($field['id']);
 
@@ -43,7 +34,7 @@ trait HasCustomFieldsTrait
     {
         foreach ($customFields as $field) {
             if (! is_array($field)) {
-                $field = (array)$field;
+                $field = (array) $field;
             }
 
             $customField = CustomField::find($field['id']);
@@ -77,5 +68,14 @@ trait HasCustomFieldsTrait
         }
 
         return null;
+    }
+
+    protected static function booted()
+    {
+        static::deleting(function ($data) {
+            if ($data->fields()->exists()) {
+                $data->fields()->delete();
+            }
+        });
     }
 }

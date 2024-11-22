@@ -27,8 +27,8 @@ class MailConfigurationController extends Controller
     }
 
     /**
-     *
      * @param MailEnvironmentRequest $request
+     *
      * @return JsonResponse
      */
     public function saveMailEnvironment(MailEnvironmentRequest $request)
@@ -65,12 +65,10 @@ class MailConfigurationController extends Controller
             'mail_ses_secret' => config('services.ses.secret'),
         ];
 
-
         return response()->json($MailData);
     }
 
     /**
-     *
      * @return JsonResponse
      */
     public function getMailDrivers()

@@ -18,7 +18,7 @@ class EstimatePdfController extends Controller
         $estimate = Estimate::find($emailLog->mailable_id);
 
         if (! $emailLog->isExpired()) {
-            if ($estimate && ($estimate->status == Estimate::STATUS_SENT || $estimate->status == Estimate::STATUS_DRAFT)) {
+            if ($estimate && ($estimate->status === Estimate::STATUS_SENT || $estimate->status === Estimate::STATUS_DRAFT)) {
                 $estimate->status = Estimate::STATUS_VIEWED;
                 $estimate->save();
                 $notifyEstimateViewed = CompanySetting::getSetting(
@@ -26,7 +26,7 @@ class EstimatePdfController extends Controller
                     $estimate->company_id
                 );
 
-                if ($notifyEstimateViewed == 'YES') {
+                if ($notifyEstimateViewed === 'YES') {
                     $data['estimate'] = Estimate::findOrFail($estimate->id)->toArray();
                     $data['user'] = Customer::find($estimate->customer_id)->toArray();
                     $notificationEmail = CompanySetting::getSetting(

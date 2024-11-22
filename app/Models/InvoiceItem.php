@@ -14,7 +14,7 @@ class InvoiceItem extends Model
     use HasCustomFieldsTrait;
 
     protected $guarded = [
-        'id'
+        'id',
     ];
 
     protected $casts = [

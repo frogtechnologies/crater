@@ -15,6 +15,7 @@ class BootstrapController extends Controller
      * Handle the incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function __invoke(Request $request)
@@ -35,6 +36,7 @@ class BootstrapController extends Controller
                 'menu' => $menu,
                 'current_customer_currency' => Currency::find($customer->currency_id),
                 'modules' => Module::where('enabled', true)->pluck('name'),
-            ]]);
+            ],
+            ]);
     }
 }

@@ -27,10 +27,11 @@ class InvoicesController extends Controller
             ->latest()
             ->paginateData($limit);
 
-        return (InvoiceResource::collection($invoices))
+        return InvoiceResource::collection($invoices)
             ->additional(['meta' => [
                 'invoiceTotalCount' => Invoice::where('status', '<>', 'DRAFT')->whereCustomer(Auth::guard('customer')->id())->count(),
-            ]]);
+            ],
+            ]);
     }
 
     public function show(Company $company, $id)

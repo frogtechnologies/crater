@@ -25,6 +25,7 @@ class FilePermissionChecker
      * Check for the folders permissions.
      *
      * @param array $folders
+     *
      * @return array
      */
     public function check(array $folders)
@@ -44,6 +45,7 @@ class FilePermissionChecker
      * Get a folder permission.
      *
      * @param $folder
+     *
      * @return string
      */
     private function getPermission($folder)
